@@ -1,0 +1,15 @@
+<div id="detailDialog"s>
+<h3>{{order.where}}</h3>
+<h2>{{order.when}}</h2>
+<md-list>
+  <md-list-item *ngFor="let meal of order.meals">
+    <md-icon md-list-avatar>local_pizza</md-icon>
+    <h3 md-line> {{meal.name}} </h3>
+    <p md-line>
+      <span> {{meal.info}} </span>
+    </p>
+  </md-list-item>
+</md-list>
+</div>
+<md-divider></md-divider>
+<button md-raised-button color="primary" [disabled]="order.completed" (click)="onComplete()">complete order</button>

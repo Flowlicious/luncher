@@ -1,3 +1,15 @@
-<p>
-  add-order works!
-</p>
+<form (ngSubmit)="onSave()">
+  <md-input-container class="full-width">
+    <input mdInput placeholder="where" [(ngModel)]="order.where" name="where">
+  </md-input-container>
+    <md-input-container class="full-width">
+    <input mdInput placeholder="when" [(ngModel)]="order.when" name="when">
+  </md-input-container>
+    <md-input-container class="full-width">
+    <input mdInput placeholder="description" [(ngModel)]="order.description" name="description">
+  </md-input-container>
+    <md-input-container class="full-width">
+    <input mdInput placeholder="url" [(ngModel)]="order.url" name="url">
+  </md-input-container>
+  <button md-raised-button color="primary" (click)="onSave()">Add</button>
+</form>

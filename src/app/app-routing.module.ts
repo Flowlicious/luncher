@@ -1,10 +1,12 @@
+import { Order } from './order/models/order';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    children: []
+    redirectTo: '/order',
+    pathMatch: 'full'
   }
 ];
 

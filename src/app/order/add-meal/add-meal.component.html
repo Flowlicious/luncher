@@ -1,0 +1,9 @@
+<form (ngSubmit)="onSave()">
+  <md-input-container class="full-width">
+    <input mdInput placeholder="name" [(ngModel)]="meal.name" name="name">
+  </md-input-container>
+    <md-input-container class="full-width">
+    <input mdInput placeholder="info" [(ngModel)]="meal.info" name="info">
+  </md-input-container>
+  <button md-raised-button color="primary" (click)="onSave()">Add</button>
+</form>
