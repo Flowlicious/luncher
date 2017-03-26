@@ -1,15 +1,15 @@
 <form (ngSubmit)="onSave()">
   <md-input-container class="full-width">
-    <input mdInput placeholder="where" [(ngModel)]="order.where" name="where">
+    <input mdInput placeholder="where" [(ngModel)]="order.where" name="where" required>
   </md-input-container>
     <md-input-container class="full-width">
-    <input mdInput placeholder="when" [(ngModel)]="order.when" name="when">
+    <input mdInput placeholder="when" [(ngModel)]="order.when" name="when" required>
   </md-input-container>
     <md-input-container class="full-width">
     <input mdInput placeholder="description" [(ngModel)]="order.description" name="description">
   </md-input-container>
     <md-input-container class="full-width">
-    <input mdInput placeholder="url" [(ngModel)]="order.url" name="url">
+    <input mdInput placeholder="url" [(ngModel)]="order.url" name="url" required>
   </md-input-container>
   <button md-raised-button color="primary" (click)="onSave()">Add</button>
 </form>
