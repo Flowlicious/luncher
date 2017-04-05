@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
+It is a sample project for my first blog / tutorial on medium here: https://medium.com/@f.gruehn/spice-up-food-ordering-with-angularfire-db15d6a35d44
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
