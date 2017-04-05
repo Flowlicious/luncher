@@ -12,11 +12,11 @@ import { AngularFireModule } from 'angularfire2';
 
 // Must export the config
 export const firebaseConfig = {
-    apiKey: 'AIzaSyCBUCTO-MI3ru8ZM_aTDjLIKTwjcXpNGt0',
-    authDomain: 'luncher-d3328.firebaseapp.com',
-    databaseURL: 'https://luncher-d3328.firebaseio.com',
-    storageBucket: 'luncher-d3328.appspot.com',
-    messagingSenderId: '153306133881'
+  apiKey: '<your-key>',
+  authDomain: '<your-project-authdomain>',
+  databaseURL: '<your-database-URL>',
+  storageBucket: '<your-storage-bucket>',
+  messagingSenderId: '<your-messaging-sender-id>'
 };
 
 @NgModule({
