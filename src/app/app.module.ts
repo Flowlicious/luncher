@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AngularFireModule } from 'angularfire2';
+import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 // Must export the config
 export const firebaseConfig = {
@@ -17,6 +17,11 @@ export const firebaseConfig = {
     databaseURL: 'https://luncher-d3328.firebaseio.com',
     storageBucket: 'luncher-d3328.appspot.com',
     messagingSenderId: '153306133881'
+};
+
+const myFirebaseAuthConfig = {
+  provider: AuthProviders.Password,
+  method: AuthMethods.Password
 };
 
 @NgModule({
@@ -31,7 +36,7 @@ export const firebaseConfig = {
     AppRoutingModule,
     MaterialModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(firebaseConfig,myFirebaseAuthConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]
