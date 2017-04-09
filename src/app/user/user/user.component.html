@@ -1,0 +1,12 @@
+<form (ngSubmit)="register()">
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Email" type="email" [(ngModel)]="credentials.email" name="Email" required>
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Password" type="password" [(ngModel)]="credentials.password" name="password" required>
+  </md-input-container>
+  <button md-raised-button color="primary" (click)="register()" *ngIf="isRegister">Register</button>
+  <button md-raised-button color="primary" (click)="login()" *ngIf="isLogin">Login</button>
+  <button md-button (click)="cancel()">Cancel</button>
+  <span color="warn">{{errorMessage}}</span>
+</form>
