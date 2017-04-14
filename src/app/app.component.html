@@ -1,8 +1,8 @@
 <md-toolbar color="primary">
   <span>{{title}}</span>
   <span class="spacer"></span>
-  <div> {{ (af.auth | async)?.uid }} </div>
-  <button md-icon-button [mdMenuTriggerFor]="menu" class="user-menu">
+  <div> {{ (af.auth | async)?.auth.displayName }} </div>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
   <md-icon class="toolbar-icon">account_box</md-icon>
 </button>
 
