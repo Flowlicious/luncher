@@ -1,9 +1,10 @@
+import { NgxErrorsModule } from '@ultimate/ngxerrors';
+import { ReactiveFormsModule } from '@angular/forms';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderService } from './services/order.service';
 import { AddMealComponent } from './add-meal/add-meal.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,9 +15,10 @@ import { AddOrderComponent } from './add-order/add-order.component';
   imports: [
     CommonModule,
     OrderRoutingModule,
-    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxErrorsModule
   ],
   providers: [OrderService],
   declarations: [OrderComponent, AddOrderComponent, AddMealComponent, OrderDetailComponent],

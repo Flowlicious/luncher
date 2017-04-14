@@ -1,3 +1,3 @@
-export class BaseModel{
-    public $key: string;
+export class BaseModel {
+  public $key?: string;
 }

@@ -1,15 +1,30 @@
-<form (ngSubmit)="onSave()">
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <md-input-container class="full-width">
-    <input mdInput placeholder="where" [(ngModel)]="order.where" name="where" required>
+    <input mdInput placeholder="Where you want to order" formControlName="where">
   </md-input-container>
-    <md-input-container class="full-width">
-    <input mdInput placeholder="when" [(ngModel)]="order.when" name="when" required>
+  <div ngxErrors="where" class="error">
+    <div ngxError="required" [when]="['dirty', 'touched']">
+      Please describe where you want to order
+    </div>
+  </div>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="When you want to order" formControlName="when">
+    <div ngxErrors="when" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Please describe when you want to order
+      </div>
+    </div>
   </md-input-container>
-    <md-input-container class="full-width">
-    <input mdInput placeholder="description" [(ngModel)]="order.description" name="description">
+  <md-input-container class="full-width">
+    <input mdInput placeholder="The Url to order from" formControlName="url">
+    <div ngxErrors="url" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Please provide a URL where other can choose food
+      </div>
+    </div>
   </md-input-container>
-    <md-input-container class="full-width">
-    <input mdInput placeholder="url" [(ngModel)]="order.url" name="url" required>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="description of the restaurant" formControlName="description">
   </md-input-container>
-  <button md-raised-button color="primary" (click)="onSave()">Add</button>
+  <button md-raised-button color="primary" [disabled]="!form.valid">Add</button>
 </form>

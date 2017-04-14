@@ -1,0 +1,37 @@
+<form [formGroup]="form" novalidate>
+  <md-input-container class="full-width" *ngIf="isRegister">
+    <input mdInput placeholder="Displayname" type="text" formControlName="displayName">
+    <div ngxErrors="displayName" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Displayname is required
+      </div>
+    </div>
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Email" type="email" formControlName="email">
+    <div ngxErrors="email" class="error">
+      <div ngxError="email" [when]="['dirty','touched']">
+        Email is not in a correct format
+      </div>
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Email is required
+      </div>
+    </div>
+  </md-input-container>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Password" type="password" formControlName="password">
+    <div ngxErrors="password" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Password is required
+      </div>
+      <div [ngxError]="['minlength']" [when]="['dirty', 'touched']">
+        The password must be at least 6 characters long
+      </div>
+    </div>
+  </md-input-container>
+  <span class="spacer"></span>
+  <button [disabled]="!form.valid" md-raised-button color="primary" (click)="register()" *ngIf="isRegister">Register</button>
+  <button [disabled]="!form.valid" md-raised-button color="primary" (click)="login()" *ngIf="isLogin">Login</button>
+  <button md-button (click)="cancel()">Cancel</button>
+  <span color="warn">{{errorMessage}}</span>
+</form>

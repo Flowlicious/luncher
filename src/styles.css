@@ -1,7 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-.full-width{
-    width: 100%;
+
+.full-width {
+  width: 100%;
 }
+
 .green {
-    color: #008000;
+  color: #008000;
+}
+
+.error {
+  color:red;
+  font-size: 12px;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
