@@ -11,6 +11,7 @@ export class Order extends BaseModel {
     public completed?: boolean;
     public createdAt?: Date;
     public createdFrom?: OrderUser;
+    public delivery?: string;
     constructor (createdFrom: OrderUser) {
         super();
         this.where = '';
@@ -21,5 +22,6 @@ export class Order extends BaseModel {
         this.completed = false;
         this.createdAt = new Date();
         this.createdFrom = createdFrom;
+        this.delivery = '';
     }
 }

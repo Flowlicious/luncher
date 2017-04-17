@@ -1,4 +1,4 @@
-import { OrderService } from './../services/order.service';
+import { OrderService } from './../shared/order.service';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';

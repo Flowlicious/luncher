@@ -57,7 +57,7 @@ export class OrderService {
    */
   completeOrder(order: Order) {
     const orderToUpdate = this.getByKey(order.$key);
-    orderToUpdate.update({ completed: true });
+    orderToUpdate.update({ completed: true, delivery: order.delivery });
   }
 
 

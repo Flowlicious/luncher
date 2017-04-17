@@ -8,6 +8,17 @@
     </div>
   </md-input-container>
   <md-input-container class="full-width">
+    <input mdInput placeholder="Price of the meal" formControlName="price">
+    <div ngxErrors="price" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Please type a price for the meal
+      </div>
+      <div ngxError="pattern" [when]="['dirty', 'touched']">
+        Please type numbers as XX,XX
+      </div>
+    </div>
+  </md-input-container>
+  <md-input-container class="full-width">
     <input mdInput placeholder="Meal infos" formControlName="info">
   </md-input-container>
   <button md-raised-button color="primary" [disabled]="!form.valid">Add</button>

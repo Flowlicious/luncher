@@ -9,8 +9,17 @@
       <p md-line>
         <span> {{meal.info}} </span>
       </p>
+      <p md-line>
+        <span *ngIf="meal.price"> {{meal.price}} €</span>
+      </p>
     </md-list-item>
   </md-list>
+  <strong>Overall price: {{order.meals | pluck: 'price' | truthify | sumPrice}} € </strong>
 </div>
-<md-divider></md-divider>
-<button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete()">complete order</button>
+<ng-template *ngIf="currentUser.uid === order.createdFrom.uid">
+  <md-divider></md-divider>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
+  </md-input-container>
+  <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete()">complete order</button>
+</ng-template>
