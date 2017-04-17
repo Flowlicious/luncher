@@ -1,7 +1,7 @@
 import { FirebaseAuthState } from 'angularfire2';
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OrderService } from './../services/order.service';
+import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Meal } from './../models/meal';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -24,6 +24,7 @@ export class AddMealComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required]],
+      price: ['', [Validators.required,Validators.pattern('([0-9]{0,2}((.)[0-9]{0,2}))$')]],
       info: [''],
     });
     this.af.auth.subscribe((auth) => {
@@ -49,7 +50,8 @@ export class AddMealComponent implements OnInit {
     const saveMeal: Meal = {
       name: formModel.name as string,
       info: formModel.info as string,
-      createdFrom: new OrderUser(this.currentUser)
+      createdFrom: new OrderUser(this.currentUser),
+      price: formModel.price as number
     };
     return saveMeal;
   }

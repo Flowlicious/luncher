@@ -2,7 +2,7 @@ import { FirebaseAuthState } from 'angularfire2';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from './../services/order.service';
+import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';

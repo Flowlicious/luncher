@@ -1,0 +1,21 @@
+<md-card fxFlex="0 0 auto" class="orderCard">
+  <md-card-header>
+    <md-card-title><strong>{{order.createdFrom.displayName}}</strong> wants to order at <strong>{{order.where}}</strong></md-card-title>
+    <md-card-subtitle>Order Meals until <strong>{{order.when}}</strong></md-card-subtitle>
+  </md-card-header>
+  <md-card-content class="cardContent">
+    <p>About the restaurant:</p>
+    <span>
+      {{order.description}}
+    </span>
+    <p>
+    Order here: <a md-mini-fab [href]="order.url" target="_blank">
+        <md-icon>shopping_cart</md-icon>
+      </a>
+    </p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-raised-button color="primary" [disabled]="order.completed" (click)="openMealDialog(order)">add meal</button>
+    <button md-button (click)="openOrderDetail(order)">view order</button>
+  </md-card-actions>
+</md-card>

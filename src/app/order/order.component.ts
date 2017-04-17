@@ -1,6 +1,6 @@
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { AddMealComponent } from './add-meal/add-meal.component';
-import { OrderService } from './services/order.service';
+import { OrderService } from './shared/order.service';
 import { AddOrderComponent } from './add-order/add-order.component';
 import { Order } from './models/order';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +14,7 @@ import { MdDialog } from '@angular/material';
 })
 export class OrderComponent implements OnInit {
   public orders: FirebaseListObservable<Order[]>;
-  constructor(public dialog: MdDialog, private orderService: OrderService, public af: AngularFire) {
+  constructor(private dialog: MdDialog, private orderService: OrderService, public af: AngularFire) {
   }
 
   ngOnInit() {
@@ -32,20 +32,5 @@ export class OrderComponent implements OnInit {
     this.dialog.open(AddOrderComponent);
   }
 
-  /**
-   * Opens a dialog to add a meal to the order
-   * @param order The order to add a meal to
-   */
-  openMealDialog(order: Order) {
-    this.dialog.open(AddMealComponent, { data: order });
-  }
-
-  /**
-   * Opens a dialog containing the selected order
-   * @param order The order to open
-   */
-  openOrderDetail(order: Order) {
-    this.dialog.open(OrderDetailComponent, { data: order });
-  }
 
 }

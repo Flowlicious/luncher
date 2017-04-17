@@ -9,7 +9,5 @@ import { AngularFire } from 'angularfire2';
 export class AppComponent {
   title = 'Luncher';
   constructor(public af: AngularFire) {
-    this.af.auth.subscribe(auth => console.log(auth));
   }
-
 }

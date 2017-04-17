@@ -8,21 +8,6 @@
   <md-progress-bar *ngIf="!(orders | async)" color="primary" mode="indeterminate">
   </md-progress-bar>
   <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" style="flex-wrap: wrap">
-    <md-card *ngFor="let order of orders | async" fxFlex="0 0 auto" class="orderCard">
-      <md-card-header>
-        <md-card-title>{{order.where}} <small *ngIf="order.completed" class="green">ordered!</small></md-card-title>
-        <md-card-subtitle>{{order.when}}</md-card-subtitle>
-      </md-card-header>
-      <md-card-content class="cardContent">
-        <p>
-          {{order.description}}
-        </p>
-        <a md-button [href]="order.url" target="_blank">open shop</a>
-      </md-card-content>
-      <md-card-actions>
-        <button md-raised-button color="primary" [disabled]="order.completed" (click)="openMealDialog(order)">add meal</button>
-        <button md-button (click)="openOrderDetail(order)">view order</button>
-      </md-card-actions>
-    </md-card>
+    <app-order-card *ngFor="let order of orders | async" [order]="order"></app-order-card>
   </div>
 </ng-template>
