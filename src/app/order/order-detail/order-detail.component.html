@@ -15,11 +15,11 @@
     </md-list-item>
   </md-list>
   <strong>Overall price: {{order.meals | pluck: 'price' | truthify | sumPrice}} € </strong>
+  <div *ngIf="currentUser.uid === order.createdFrom.uid">
+    <md-divider></md-divider>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Estimated delivery" (value)="order.delivery" #deliveryTime>
+    </md-input-container>
+    <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(deliveryTime.value)">complete order</button>
+  </div>
 </div>
-<ng-template *ngIf="currentUser.uid === order.createdFrom.uid">
-  <md-divider></md-divider>
-  <md-input-container class="full-width">
-    <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
-  </md-input-container>
-  <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete()">complete order</button>
-</ng-template>
