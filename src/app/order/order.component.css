@@ -1,13 +1,18 @@
 #add {
-    position: absolute;
-    right: 25%;
-    top: 40px;
-    z-index: 998;
+  position: absolute;
+  right: 25%;
+  top: 40px;
+  z-index: 998;
 }
-.orderCard {
-   margin: 25px 25px 25px 0
+
+@media only screen and (max-device-width: 1000px) {
+  #add {
+    position: fixed;
+    right: 5%;
+    top: 80%;
+  }
 }
+
 .cardContent {
-    margin: 0 8px;
-    
+  margin: 0 8px;
 }

@@ -1,9 +1,25 @@
-<form (ngSubmit)="onSave()">
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <md-input-container class="full-width">
-    <input mdInput placeholder="name" [(ngModel)]="meal.name" name="name">
+    <input mdInput placeholder="Name of the Meal" formControlName="name">
+    <div ngxErrors="name" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Please type the name of your meal
+      </div>
+    </div>
   </md-input-container>
-    <md-input-container class="full-width">
-    <input mdInput placeholder="info" [(ngModel)]="meal.info" name="info">
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Price of the meal" formControlName="price">
+    <div ngxErrors="price" class="error">
+      <div ngxError="required" [when]="['dirty', 'touched']">
+        Please type a price for the meal
+      </div>
+      <div ngxError="pattern" [when]="['dirty', 'touched']">
+        Please type numbers as XX,XX
+      </div>
+    </div>
   </md-input-container>
-  <button md-raised-button color="primary" (click)="onSave()">Add</button>
+  <md-input-container class="full-width">
+    <input mdInput placeholder="Meal infos" formControlName="info">
+  </md-input-container>
+  <button md-raised-button color="primary" [disabled]="!form.valid">Add</button>
 </form>

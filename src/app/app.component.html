@@ -1,2 +1,24 @@
-<md-toolbar color="primary">{{title}}</md-toolbar>
+<md-toolbar color="primary">
+  <span>{{title}}</span>
+  <span class="spacer"></span>
+  <div> {{ (af.auth | async)?.auth.displayName }} </div>
+  <button md-icon-button [mdMenuTriggerFor]="menu">
+  <md-icon class="toolbar-icon">account_box</md-icon>
+</button>
+
+  <md-menu #menu="mdMenu">
+    <button md-menu-item [routerLink]="['register']" *ngIf="!(af.auth | async)?.uid">
+    <md-icon>person_add</md-icon>
+    <span>register</span>
+  </button>
+    <button md-menu-item [routerLink]="['login']" *ngIf="!(af.auth | async)?.uid">
+    <md-icon>person</md-icon>
+    <span>login</span>
+  </button>
+    <button md-menu-item (click)="af.auth.logout()" *ngIf="(af.auth | async)?.uid">
+    <md-icon>person_outline</md-icon>
+    <span>logout</span>
+  </button>
+  </md-menu>
+</md-toolbar>
 <router-outlet></router-outlet>
