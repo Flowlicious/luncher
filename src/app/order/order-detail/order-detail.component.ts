@@ -21,12 +21,14 @@ export class OrderDetailComponent implements OnInit {
   }
 
   /**
-   * completes the order
+   * Completes an order with an optional estimated delivery time
+   * @param deliveryTime adds a estimated time for delivery to the order (optional)
    */
-  onComplete() {
+  onComplete(deliveryTime?: string) {
     if (this.currentUser.uid !== this.order.createdFrom.uid) {
       return;
     }
+    this.order.delivery = deliveryTime;
     this.orderService.completeOrder(this.order);
     this.dialogRef.close();
   }

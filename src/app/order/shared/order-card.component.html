@@ -13,6 +13,9 @@
         <md-icon>shopping_cart</md-icon>
       </a>
     </p>
+    <p *ngIf="order.completed" class="completed">
+      Order is completed. <span *ngIf="order.delivery">estimated delivery is about {{order.delivery}}</span>
+    </p>
   </md-card-content>
   <md-card-actions>
     <button md-raised-button color="primary" [disabled]="order.completed" (click)="openMealDialog(order)">add meal</button>
