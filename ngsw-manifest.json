@@ -1,0 +1,16 @@
+{
+  "routing": {
+    "index": "/index.html",
+    "routes": {
+      "/order": {
+        "prefix": false
+      },
+      "/login": {
+        "prefix": false
+      },
+      "/register": {
+        "prefix": false
+      }
+    }
+  }
+}

@@ -6,6 +6,8 @@ import { Order } from './models/order';
 import { Component, OnInit } from '@angular/core';
 import { FirebaseListObservable, AngularFire } from 'angularfire2';
 import { MdDialog } from '@angular/material';
+import { FirebaseApp } from 'angularfire2';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-order',
@@ -14,7 +16,10 @@ import { MdDialog } from '@angular/material';
 })
 export class OrderComponent implements OnInit {
   public orders: FirebaseListObservable<Order[]>;
-  constructor(private dialog: MdDialog, private orderService: OrderService, public af: AngularFire) {
+  private _messaging: firebase.messaging.Messaging;
+  constructor( private dialog: MdDialog,
+    private orderService: OrderService, public af: AngularFire) {
+
   }
 
   ngOnInit() {

@@ -4,6 +4,7 @@
     <md-card-title>Please Register to see the orders</md-card-title>
   </md-card-header>
 </md-card>
+
 <ng-template #displayOrders>
   <md-progress-bar *ngIf="!(orders | async)" color="primary" mode="indeterminate">
   </md-progress-bar>
