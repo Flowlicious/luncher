@@ -1,4 +1,3 @@
-import { Inject, Injectable } from "@angular/core";
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { AddMealComponent } from './add-meal/add-meal.component';
 import { OrderService } from './shared/order.service';
@@ -18,18 +17,9 @@ import * as firebase from 'firebase';
 export class OrderComponent implements OnInit {
   public orders: FirebaseListObservable<Order[]>;
   private _messaging: firebase.messaging.Messaging;
-  constructor(@Inject(FirebaseApp) private _firebaseApp: firebase.app.App, private dialog: MdDialog,
+  constructor( private dialog: MdDialog,
     private orderService: OrderService, public af: AngularFire) {
-    this._messaging = firebase.messaging(this._firebaseApp);
-    this._messaging.requestPermission()
-      .then(
-      () => {
-        console.log("yea");
-      })
-      .catch(
-      (error) => {
-        console.log("Oh");
-      });
+
   }
 
   ngOnInit() {
