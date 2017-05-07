@@ -1,4 +1,4 @@
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { FirebaseAuthState } from 'angularfire2';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
@@ -14,12 +14,12 @@ import { OrderUser } from 'app/order/models/user';
   templateUrl: './add-order.component.html',
   styleUrls: ['./add-order.component.css']
 })
-export class AddOrderComponent implements OnInit {
+export class AddOrderDialogComponent implements OnInit {
   order: Order;
   form: FormGroup;
   currentUser: firebase.User;
-  constructor(private orderService: OrderService,
-    private af: AngularFire, private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(public dialogRef: MdDialogRef<AddOrderDialogComponent>, private orderService: OrderService,
+    private af: AngularFire, private formBuilder: FormBuilder, private router: Router) {
   }
 
   ngOnInit() {
@@ -36,13 +36,13 @@ export class AddOrderComponent implements OnInit {
   }
 
   /**
-   * Saves the current order to the database and returns to order route
+   * Saves the current order to the database and closes the dialog
    */
   onSave() {
     if (this.form.invalid) { return; }
     const order = this.prepareSaveOrder();
     this.orderService.add(order);
-    this.router.navigate(['/order']);
+    this.dialogRef.close();
   }
 
   /**
