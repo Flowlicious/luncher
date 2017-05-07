@@ -14,7 +14,12 @@ export class OrderService {
    * Gets all orders of today
    */
   getAllToday() {
-    return this.orders;
+    return this.af.database.list('/orders', {
+      query : {
+        orderByChild: 'createdAt',
+        equalTo : new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
+      }
+    });
   }
 
   /**

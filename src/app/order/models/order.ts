@@ -9,7 +9,7 @@ export class Order extends BaseModel {
     public url: string;
     public meals?: Meal[];
     public completed?: boolean;
-    public createdAt?: Date;
+    public createdAt?: number;
     public createdFrom?: OrderUser;
     public delivery?: string;
     constructor (createdFrom: OrderUser) {
@@ -20,7 +20,7 @@ export class Order extends BaseModel {
         this.url = '';
         this.meals = [];
         this.completed = false;
-        this.createdAt = new Date();
+        this.createdAt = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime(); // saves the date without time as string
         this.createdFrom = createdFrom;
         this.delivery = '';
     }
