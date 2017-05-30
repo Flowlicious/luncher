@@ -14,7 +14,9 @@ export class IOrderDetailComponent {
     });
     if (this.route) {
       this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
-        .subscribe((order: Order) => this.order = order);
+        .subscribe((order: Order) => {
+          this.order = order;
+        });
     }
   }
 }
