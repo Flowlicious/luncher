@@ -2,8 +2,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrderService } from './../shared/order.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';
-import { AngularFire } from 'angularfire2';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-order-detail',
@@ -11,10 +11,10 @@ import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.comp
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailComponent extends IOrderDetailComponent {
-  currentUser: firebase.User;
+  currentUser: any;
   order: Order;
-  constructor(private os: OrderService, private af: AngularFire, private _route: ActivatedRoute, private router: Router) {
-    super(os, af, _route);
+  constructor(private os: OrderService, private _afAuth: AngularFireAuth, private _route: ActivatedRoute, private router: Router) {
+    super(os, _route, _afAuth);
   }
   /**
    * Completes an order with an optional estimated delivery time

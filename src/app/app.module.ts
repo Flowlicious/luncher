@@ -9,21 +9,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
 
-// Must export the config
-export const firebaseConfig = {
-    apiKey: 'AIzaSyCBUCTO-MI3ru8ZM_aTDjLIKTwjcXpNGt0',
-    authDomain: 'luncher-d3328.firebaseapp.com',
-    databaseURL: 'https://luncher-d3328.firebaseio.com',
-    storageBucket: 'luncher-d3328.appspot.com',
-    messagingSenderId: '153306133881'
-};
-
-const myFirebaseAuthConfig = {
-  provider: AuthProviders.Password,
-  method: AuthMethods.Password
-};
 
 @NgModule({
   declarations: [
@@ -39,7 +29,9 @@ const myFirebaseAuthConfig = {
     AppRoutingModule,
     MaterialModule,
     FlexLayoutModule,
-    AngularFireModule.initializeApp(firebaseConfig,myFirebaseAuthConfig),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,6 @@ import { AngularFire } from 'angularfire2';
 })
 export class AppComponent {
   title = 'Luncher';
-  constructor(public af: AngularFire) {
+  constructor(public afAuth: AngularFireAuth) {
   }
 }

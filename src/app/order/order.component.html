@@ -1,5 +1,5 @@
-<button md-fab id="add" (click)="addOrderDialog()"  *ngIf="(af.auth | async)" ><md-icon>add</md-icon></button>
-<md-card *ngIf="!(af.auth | async); else displayOrders">
+<button md-fab id="add" (click)="addOrderDialog()"  *ngIf="afAuth.auth.currentUser" ><md-icon>add</md-icon></button>
+<md-card *ngIf="!afAuth.auth.currentUser; else displayOrders">
   <md-card-header>
     <md-card-title>Please Register to see the orders</md-card-title>
   </md-card-header>

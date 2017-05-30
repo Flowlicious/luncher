@@ -1,20 +1,20 @@
 import { Meal } from './../models/meal';
 import { Order } from './../models/order';
-import { FirebaseListObservable, AngularFire, FirebaseObjectObservable } from 'angularfire2';
+import { FirebaseListObservable, FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class OrderService {
   public orders: FirebaseListObservable<Order[]>;
-  constructor(private af: AngularFire) {
-    this.orders = af.database.list('/orders');
+  constructor(private afDb: AngularFireDatabase) {
+    this.orders = afDb.list('/orders');
   }
 
   /**
    * Gets all orders of today
    */
   getAllToday() {
-    return this.af.database.list('/orders', {
+    return this.afDb.list('/orders', {
       query : {
         orderByChild: 'createdAt',
         equalTo : new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
@@ -35,7 +35,7 @@ export class OrderService {
    * @param key Order Key
    */
   getByKey(key: string) {
-    return this.af.database.object(`/orders/${key}`);
+    return this.afDb.object(`/orders/${key}`);
   }
 
   /**

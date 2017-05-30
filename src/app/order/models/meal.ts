@@ -1,4 +1,3 @@
-import { FirebaseAuthState } from 'angularfire2/auth';
 import { OrderUser } from './user';
 export class Meal {
     public name: string;

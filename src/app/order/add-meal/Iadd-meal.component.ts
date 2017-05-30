@@ -1,16 +1,16 @@
 import { OrderService } from 'app/order/shared/order.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AngularFire } from 'angularfire2';
 import { Order } from 'app/order/models/order';
 import { Meal } from 'app/order/models/meal';
 import { OrderUser } from 'app/order/models/user';
 import { ActivatedRoute, Params } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 export class IAddMealComponent {
   order: Order;
   form: FormGroup;
-  currentUser: firebase.User;
-  constructor(private orderService: OrderService, private formBuilder: FormBuilder, private angularFire: AngularFire,
+  currentUser: any;
+  constructor(private orderService: OrderService, private formBuilder: FormBuilder, private angularFireAuth: AngularFireAuth,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -19,8 +19,8 @@ export class IAddMealComponent {
       price: ['', [Validators.required, Validators.pattern('([0-9]{0,2}((.)[0-9]{0,2}))$')]],
       info: [''],
     });
-    this.angularFire.auth.subscribe((auth) => {
-      this.currentUser = auth.auth;
+    this.angularFireAuth.authState.subscribe((auth) => {
+      this.currentUser = auth;
     });
     if (this.route) {
       this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))

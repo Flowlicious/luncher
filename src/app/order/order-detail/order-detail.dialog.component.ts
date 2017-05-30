@@ -3,8 +3,8 @@ import { OrderService } from './../shared/order.service';
 import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';
-import { AngularFire } from 'angularfire2';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-order-detail',
@@ -12,10 +12,10 @@ import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.comp
   styleUrls: ['./order-detail.component.css']
 })
 export class OrderDetailDialogComponent extends IOrderDetailComponent {
-  currentUser: firebase.User;
+  currentUser: any;
   constructor(private dialogRef: MdDialogRef<OrderDetailDialogComponent>, @Inject(MD_DIALOG_DATA) public order: Order,
-    public os: OrderService, private af: AngularFire) {
-    super(os, af, null);
+    public os: OrderService, private _afAuth: AngularFireAuth) {
+    super(os, null, _afAuth);
   }
 
   /**

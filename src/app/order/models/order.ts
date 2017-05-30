@@ -1,4 +1,3 @@
-import { FirebaseAuthState } from 'angularfire2';
 import { Meal } from './meal';
 import { BaseModel } from 'app/common/baseModel';
 import { OrderUser } from './user';

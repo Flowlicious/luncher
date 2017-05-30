@@ -1,5 +1,4 @@
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FirebaseAuthState } from 'angularfire2';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
@@ -7,13 +6,13 @@ import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
-import { AngularFire } from 'angularfire2';
 import { OrderUser } from 'app/order/models/user';
+import { AngularFireAuth } from 'angularfire2/auth';
 export class IAddOrderComponent {
   order: Order;
   form: FormGroup;
-  currentUser: firebase.User;
-  constructor(private orderService: OrderService, private af: AngularFire, private formBuilder: FormBuilder,
+  currentUser: any;
+  constructor(private orderService: OrderService, private afAuth: AngularFireAuth, private formBuilder: FormBuilder,
     private route: ActivatedRoute) { }
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -23,8 +22,8 @@ export class IAddOrderComponent {
       description: [''],
     });
 
-    this.af.auth.subscribe((auth) => {
-      this.currentUser = auth.auth;
+    this.afAuth.authState.subscribe((auth) => {
+      this.currentUser = auth;
     });
 
     if (this.route) {
