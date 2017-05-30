@@ -4,21 +4,18 @@ import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';
 import { AngularFire } from 'angularfire2';
+import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailDialogComponent implements OnInit {
+export class OrderDetailDialogComponent extends IOrderDetailComponent {
   currentUser: firebase.User;
   constructor(private dialogRef: MdDialogRef<OrderDetailDialogComponent>, @Inject(MD_DIALOG_DATA) public order: Order,
-    private orderService: OrderService, private af: AngularFire) { }
-
-  ngOnInit() {
-    this.af.auth.subscribe((auth) => {
-      this.currentUser = auth.auth;
-    });
+    public os: OrderService, private af: AngularFire) {
+    super(os, af, null);
   }
 
   /**
@@ -30,7 +27,7 @@ export class OrderDetailDialogComponent implements OnInit {
       return;
     }
     this.order.delivery = deliveryTime;
-    this.orderService.completeOrder(this.order);
+    this.os.completeOrder(this.order);
     this.dialogRef.close();
   }
 }

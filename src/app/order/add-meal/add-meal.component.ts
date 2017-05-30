@@ -8,31 +8,21 @@ import { Meal } from './../models/meal';
 import { Component, OnInit, Inject } from '@angular/core';
 import { AngularFire } from 'angularfire2';
 import { OrderUser } from 'app/order/models/user';
+import { IAddMealComponent } from 'app/order/add-meal/Iadd-meal.component';
 
 @Component({
   selector: 'app-add-meal',
   templateUrl: './add-meal.component.html',
   styleUrls: ['./add-meal.component.css']
 })
-export class AddMealComponent implements OnInit {
+export class AddMealComponent extends IAddMealComponent {
   public meal: Meal;
   form: FormGroup;
   currentUser: firebase.User;
   order: Order;
-  constructor(private orderService: OrderService, private formBuilder: FormBuilder, private af: AngularFire, private router: Router,
-  private route: ActivatedRoute) { }
-
-  ngOnInit() {
-    this.form = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      price: ['', [Validators.required, Validators.pattern('([0-9]{0,2}((.)[0-9]{0,2}))$')]],
-      info: [''],
-    });
-    this.af.auth.subscribe((auth) => {
-      this.currentUser = auth.auth;
-    });
-     this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
-     .subscribe((order: Order) => this.order = order);
+  constructor(private os: OrderService, private fb: FormBuilder, private af: AngularFire, private router: Router,
+    private _route: ActivatedRoute) {
+    super(os, fb, af, _route);
   }
 
   /**
@@ -41,21 +31,7 @@ export class AddMealComponent implements OnInit {
   onSave() {
     if (this.form.invalid) { return; }
     const meal = this.prepareSaveMeal();
-    this.orderService.addMeal(this.order, meal);
+    this.os.addMeal(this.order, meal);
     this.router.navigate(['/order']);
-  }
-
-  /**
-   * Returns a Meal object from the form model
-   */
-  prepareSaveMeal(): Meal {
-    const formModel = this.form.value;
-    const saveMeal: Meal = {
-      name: formModel.name as string,
-      info: formModel.info as string,
-      createdFrom: new OrderUser(this.currentUser),
-      price: formModel.price as number
-    };
-    return saveMeal;
   }
 }
