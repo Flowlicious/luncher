@@ -4,7 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { trigger, state, style, animate, transition } from '@angular/animations';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
@@ -13,7 +13,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class OrderDetailComponent extends IOrderDetailComponent {
   currentUser: any;
   order: Order;
-  constructor(private os: OrderService, private _afAuth: AngularFireAuth, private _route: ActivatedRoute, private router: Router) {
+  constructor(public os: OrderService, private _afAuth: AngularFireAuth, private _route: ActivatedRoute, private router: Router) {
     super(os, _route, _afAuth);
   }
   /**

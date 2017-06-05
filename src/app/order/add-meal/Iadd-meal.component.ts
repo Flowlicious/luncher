@@ -34,6 +34,7 @@ export class IAddMealComponent {
   prepareSaveMeal(): Meal {
     const formModel = this.form.value;
     const saveMeal: Meal = {
+      id: new Date().getTime(),
       name: formModel.name as string,
       info: formModel.info as string,
       createdFrom: new OrderUser(this.currentUser),

@@ -1,6 +1,39 @@
 #detailDialog {
     width: 400px;
 }
+.orderList {
+  margin-bottom: 15px;
+}
+#mobileToolbar {
+  display: none;
+}
+@media only screen and (max-device-width: 1000px) {
+  #detailDialog {
+   width: 100%;
+  }
+  #mobileToolbar {
+    display: block;
+  }
+}
 .mat-divider {
     margin: 20px;
+}
+.mat-card-avatar {
+  margin-top: 20px;
+}
+.control-col {
+  display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+}
+.button-col .mat-mini-fab {
+    margin-right: 5px;
+}
+.button-col{
+  display: flex;
+  align-self: center;
+}
+.mat-card {
+  margin: 10px;
 }

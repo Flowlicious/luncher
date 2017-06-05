@@ -5,7 +5,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Order } from './../models/order';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
@@ -13,7 +13,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class OrderDetailDialogComponent extends IOrderDetailComponent {
   currentUser: any;
-  constructor(private dialogRef: MdDialogRef<OrderDetailDialogComponent>, @Inject(MD_DIALOG_DATA) public order: Order,
+  constructor(public dialogRef: MdDialogRef<OrderDetailDialogComponent>, @Inject(MD_DIALOG_DATA) public order: Order,
     public os: OrderService, private _afAuth: AngularFireAuth) {
     super(os, null, _afAuth);
   }

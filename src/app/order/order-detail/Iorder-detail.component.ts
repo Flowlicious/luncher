@@ -6,7 +6,7 @@ import { Params, ActivatedRoute } from '@angular/router';
 export class IOrderDetailComponent {
   currentUser: any;
   order: Order;
-  constructor(private orderService: OrderService, private route: ActivatedRoute, private afAuth: AngularFireAuth) { }
+  constructor(public orderService: OrderService, private route: ActivatedRoute, private afAuth: AngularFireAuth) { }
 
   ngOnInit() {
     this.afAuth.authState.subscribe((auth) => {

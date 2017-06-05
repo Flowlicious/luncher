@@ -1,11 +1,11 @@
-import {OrderDetailComponent} from './order-detail/order-detail.component';
-import {AddMealComponent} from './add-meal/add-meal.component';
-import {AddOrderComponent} from './add-order/add-order.component';
-import {OrderComponent} from './order.component';
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { AddMealComponent } from './add-meal/add-meal.component';
+import { AddOrderComponent } from './add-order/add-order.component';
+import { OrderComponent } from './order.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-const routes : Routes = [
+const routes: Routes = [
   {
     path: 'order',
     component: OrderComponent
@@ -25,4 +25,4 @@ const routes : Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OrderRoutingModule {}
+export class OrderRoutingModule { }

@@ -15,9 +15,9 @@ export class OrderService {
    */
   getAllToday() {
     return this.afDb.list('/orders', {
-      query : {
+      query: {
         orderByChild: 'createdAt',
-        equalTo : new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
+        equalTo: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
       }
     });
   }
@@ -52,7 +52,44 @@ export class OrderService {
       }
       meals = data.meals;
     });
+    meal.id = new Date().getTime();
     meals.push(meal);
+    orderToUpdate.update({ meals: meals });
+  }
+
+  /**
+   * Deletes a Meal from an Order
+   * @param order The order to delete the meal from
+   * @param meal The meal to delete
+   */
+  deleteMeal(order: Order, meal: Meal) {
+    const orderToUpdate: FirebaseObjectObservable<Order> = this.getByKey(order.$key);
+    let meals = [];
+    orderToUpdate.subscribe(data => {
+      if (!data.meals) {
+        data.meals = [];
+      }
+      meals = data.meals;
+    });
+    const deleteIndex = meals.findIndex(m => m.id === meal.id);
+    debugger;
+    meals.splice(deleteIndex, deleteIndex + 1);
+    orderToUpdate.update({ meals: meals });
+  }
+
+  updateMeal(order: Order, meal: Meal) {
+    const orderToUpdate: FirebaseObjectObservable<Order> = this.getByKey(order.$key);
+    let meals = [];
+    orderToUpdate.subscribe(data => {
+      if (!data.meals) {
+        data.meals = [];
+      }
+      meals = data.meals;
+    });
+    const mealIndex = meals.findIndex(m => m.id === meal.id);
+    meals[mealIndex].info = meal.info;
+    meals[mealIndex].name = meal.name;
+    meals[mealIndex].price = meal.price;
     orderToUpdate.update({ meals: meals });
   }
 
