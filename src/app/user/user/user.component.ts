@@ -62,7 +62,7 @@ export class UserComponent implements OnInit {
     }
     this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then((savedUser) => {
-        savedUser.auth.updateProfile({
+        savedUser.updateProfile({
           displayName: user.displayName,
           photoURL: ''
         });

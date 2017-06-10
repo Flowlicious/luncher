@@ -13,8 +13,6 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
-import { provideStore } from '@ngrx/store';
-import { selectedOrder } from 'app/order/reducer/selected-order.reducer';
 
 @NgModule({
   declarations: [

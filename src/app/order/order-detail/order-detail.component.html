@@ -7,7 +7,7 @@
       <span class="spacer"></span>
       <span>Order at: {{order.where}}</span>
     </md-toolbar>
-    <md-card *ngFor="let meal of order.meals">
+    <md-card *ngFor="let meal of order.meals" class="orderCard">
       <md-card-header>
         <div md-card-avatar class="control-col">
           <md-icon>local_pizza</md-icon>
@@ -31,12 +31,11 @@
             <input mdInput placeholder="Price of meal" [(ngModel)]="meal.price">
           </md-input-container>
         </md-card-subtitle>
-
         <span class="spacer"></span>
         <div class="button-col">
           <button md-mini-fab (click)="os.updateMeal(order, meal)" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
-          <button md-mini-fab (click)="meal.editMode = true" *ngIf="!meal.editMode"><md-icon>edit_mode</md-icon></button>
-          <button md-mini-fab (click)="os.deleteMeal(order, meal)" color="warn" *ngIf="!meal.editMode"><md-icon>delete</md-icon></button>
+          <button md-mini-fab (click)="meal.editMode = true" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>edit_mode</md-icon></button>
+          <button md-mini-fab (click)="os.deleteMeal(order, meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
           <button md-mini-fab color="accent" *ngIf="meal.editMode" (click)="meal.editMode = false"><md-icon>cancel</md-icon></button>
         </div>
       </md-card-header>
