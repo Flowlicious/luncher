@@ -74,6 +74,7 @@ export class OrderService {
     const deleteIndex = meals.findIndex(m => m.id === meal.id);
     meals.splice(deleteIndex, deleteIndex + 1);
     orderToUpdate.update({ meals: meals });
+    order.meals = meals;
   }
 
   updateMeal(order: Order, meal: Meal) {
