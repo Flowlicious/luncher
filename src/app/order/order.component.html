@@ -15,7 +15,7 @@
     </div>
     <div fxFlex="40" [@slideInOut]="orderOpen"  id="detailColumn">
       <button *ngIf="selectedOrder" class="closeButton" md-mini-fab color="primary" (click)="selectedOrder = null; orderOpen = 'close'"><md-icon>arrow_forward</md-icon></button>
-      <app-order-detail  *ngIf="selectedOrder"  [order]="selectedOrder"></app-order-detail>
+      <app-order-detail  *ngIf="selectedOrder"  [orderid]="selectedOrder.$key"></app-order-detail>
     </div>
   </div>
 </ng-template>

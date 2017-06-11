@@ -12,7 +12,8 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class OrderDetailComponent implements OnInit {
   currentUser: any;
-  @Input() order: Order;
+  @Input() orderid: string;
+  public order: Order;
   constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -20,13 +21,15 @@ export class OrderDetailComponent implements OnInit {
     this.afAuth.authState.subscribe((auth) => {
       this.currentUser = auth;
     });
-    if (this.route) {
+    if (!this.orderid) {
       this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
         .subscribe((order: Order) => {
-          if (!this.order) {
-            this.order = order;
-          }
+          this.order = order;
         });
+    } else {
+      this.orderService.getByKey(this.orderid).subscribe((order: Order) => {
+        this.order = order;
+      });
     }
   }
   /**
