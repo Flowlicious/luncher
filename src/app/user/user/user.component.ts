@@ -3,8 +3,9 @@ import { TestBed } from '@angular/core/testing/src/testing';
 import { OrderUser } from '../../order/models/user';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { AngularFire } from 'angularfire2';
+import { AngularFireModule } from 'angularfire2';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,8 @@ export class UserComponent implements OnInit {
   isLogin: boolean;
   errorMessage: string;
   form: FormGroup;
-  constructor(private route: ActivatedRoute, private af: AngularFire, private router: Router, private fb: FormBuilder) { }
+  constructor(private route: ActivatedRoute, private af: AngularFireModule, private router: Router, private fb: FormBuilder,
+    private afAuth: AngularFireAuth) { }
 
   ngOnInit() {
     this.isRegister = this.route.snapshot.data.type === 'register';
@@ -32,19 +34,16 @@ export class UserComponent implements OnInit {
     }
   }
 
-/**
- * Login user
- */
+  /**
+   * Login user
+   */
   login() {
     const user = this.prepareSaveUser();
     if (!this.form.valid) {
       return;
     }
-    this.af.auth.login({
-      // Create user
-      email: user.email,
-      password: user.password
-    })
+
+    this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
       .then((success) => {
         this.router.navigate(['order']);
       })
@@ -61,22 +60,19 @@ export class UserComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    this.af.auth.createUser({
-      // Create user
-      email: user.email,
-      password: user.password
-    }).then((savedUser) => {
-      savedUser.auth.updateProfile({
-        displayName: user.displayName,
-        photoURL: ''
+    this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
+      .then((savedUser) => {
+        savedUser.updateProfile({
+          displayName: user.displayName,
+          photoURL: ''
+        });
+      }).then((test) => {
+        // Success
+        this.router.navigate(['order']);
+      }).catch((error) => {
+        // Error
+        console.log(error);
       });
-    }).then((test) => {
-      // Success
-      this.router.navigate(['order']);
-    }).catch((error) => {
-      // Error
-      console.log(error);
-    });
   }
 
   /**

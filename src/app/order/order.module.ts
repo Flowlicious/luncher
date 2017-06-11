@@ -1,5 +1,5 @@
 import { NgxErrorsModule } from '@ultimate/ngxerrors';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrderDetailDialogComponent } from './order-detail/order-detail.dialog.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderService } from './shared/order.service';
@@ -26,7 +26,8 @@ import {AddOrderDialogComponent} from 'app/order/add-order/add-order.dialog.comp
     FlexLayoutModule,
     NgxErrorsModule,
     NgArrayPipesModule,
-    NgMathPipesModule
+    NgMathPipesModule,
+    FormsModule
   ],
   providers: [OrderService],
   declarations: [OrderComponent, AddOrderComponent, AddMealComponent, AddMealDialogComponent, OrderDetailDialogComponent,

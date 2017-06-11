@@ -9,8 +9,19 @@
   #add {
     position: fixed;
     right: 5%;
-    top: 80%;
+    top: 90%;
   }
+}
+
+#detailColumn {
+   width: 100%;
+   box-shadow: -11px -4px 8px 0px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+   border-radius: 2px;
+   padding: 25px 0 25px 25px;
+}
+
+.closeButton {
+  right: 45px;
 }
 
 .cardContent {

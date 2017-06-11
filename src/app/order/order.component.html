@@ -1,5 +1,5 @@
-<button md-fab id="add" (click)="addOrderDialog()"  *ngIf="(af.auth | async)" ><md-icon>add</md-icon></button>
-<md-card *ngIf="!(af.auth | async); else displayOrders">
+<button md-fab id="add" (click)="addOrderDialog()" *ngIf="afAuth.auth.currentUser"><md-icon>add</md-icon></button>
+<md-card *ngIf="!afAuth.auth.currentUser; else displayOrders">
   <md-card-header>
     <md-card-title>Please Register to see the orders</md-card-title>
   </md-card-header>
@@ -8,7 +8,14 @@
 <ng-template #displayOrders>
   <md-progress-bar *ngIf="!(orders | async)" color="primary" mode="indeterminate">
   </md-progress-bar>
-  <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" style="flex-wrap: wrap">
-    <app-order-card *ngFor="let order of orders | async" [order]="order"></app-order-card>
+  <div fxLayout="row">
+    <div fxLayout="row" fxFlex fxLayout.sm="column" fxLayout.xs="column" style="flex-wrap: wrap">
+      <app-order-card *ngFor="let order of orders | async" [order]="order" (updateSelectedOrder)="updateSelectedOrder($event)">
+      </app-order-card>
+    </div>
+    <div fxFlex="40" [@slideInOut]="orderOpen"  id="detailColumn">
+      <button *ngIf="selectedOrder" class="closeButton" md-mini-fab color="primary" (click)="selectedOrder = null; orderOpen = 'close'"><md-icon>arrow_forward</md-icon></button>
+      <app-order-detail  *ngIf="selectedOrder"  [order]="selectedOrder"></app-order-detail>
+    </div>
   </div>
 </ng-template>

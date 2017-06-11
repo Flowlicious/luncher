@@ -1,3 +1,7 @@
+<md-toolbar color="primary" id="mobileToolbar">
+  <md-icon routerLink="/order">arrow_back</md-icon>
+  <span class="spacer"></span>
+</md-toolbar>
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <md-input-container class="full-width">
     <input mdInput placeholder="Where you want to order" formControlName="where">

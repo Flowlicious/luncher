@@ -9,7 +9,7 @@ export class SumPricePipe implements PipeTransform {
     let sum = 0;
     if (value) {
       value.forEach(element => {
-        sum = sum + parseFloat(element);
+        sum = sum + parseFloat(element.replace(',', '.'));
       });
     }
     return sum;
