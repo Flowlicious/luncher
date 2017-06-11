@@ -1,29 +1,33 @@
 <md-progress-bar *ngIf="!order; else addMeal" color="primary" mode="indeterminate">
 </md-progress-bar>
 <ng-template #addMeal>
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <md-input-container class="full-width">
-    <input mdInput placeholder="Name of the Meal" formControlName="name">
-    <div ngxErrors="name" class="error">
-      <div ngxError="required" [when]="['dirty', 'touched']">
-        Please type the name of your meal
+  <md-toolbar color="primary" id="mobileToolbar">
+    <md-icon routerLink="/order">arrow_back</md-icon>
+    <span class="spacer"></span>
+  </md-toolbar>
+  <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Name of the Meal" formControlName="name">
+      <div ngxErrors="name" class="error">
+        <div ngxError="required" [when]="['dirty', 'touched']">
+          Please type the name of your meal
+        </div>
       </div>
-    </div>
-  </md-input-container>
-  <md-input-container class="full-width">
-    <input mdInput placeholder="Price of the meal" formControlName="price">
-    <div ngxErrors="price" class="error">
-      <div ngxError="required" [when]="['dirty', 'touched']">
-        Please type a price for the meal
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Price of the meal" formControlName="price">
+      <div ngxErrors="price" class="error">
+        <div ngxError="required" [when]="['dirty', 'touched']">
+          Please type a price for the meal
+        </div>
+        <div ngxError="pattern" [when]="['dirty', 'touched']">
+          Please type numbers as XX,XX
+        </div>
       </div>
-      <div ngxError="pattern" [when]="['dirty', 'touched']">
-        Please type numbers as XX,XX
-      </div>
-    </div>
-  </md-input-container>
-  <md-input-container class="full-width">
-    <input mdInput placeholder="Meal infos" formControlName="info">
-  </md-input-container>
-  <button md-raised-button color="primary" [disabled]="!form.valid">Add</button>
-</form>
+    </md-input-container>
+    <md-input-container class="full-width">
+      <input mdInput placeholder="Meal infos" formControlName="info">
+    </md-input-container>
+    <button md-raised-button color="primary" [disabled]="!form.valid">Add</button>
+  </form>
 </ng-template>

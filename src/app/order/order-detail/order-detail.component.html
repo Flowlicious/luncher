@@ -7,6 +7,14 @@
       <span class="spacer"></span>
       <span>Order at: {{order.where}}</span>
     </md-toolbar>
+    <h3 id="headline">Order at: {{order.where}}</h3>
+    <div *ngIf="currentUser && (currentUser.uid === order.createdFrom.uid)">
+      <md-input-container class="full-width">
+        <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
+      </md-input-container>
+      <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(deliveryTime.value)">complete order</button>
+      <md-divider></md-divider>
+    </div>
     <md-card *ngFor="let meal of order.meals" class="orderCard">
       <md-card-header>
         <div md-card-avatar class="control-col">
@@ -16,7 +24,7 @@
         <md-card-subtitle>
           <span *ngIf="!meal.editMode">{{meal.name}}</span>
           <md-input-container *ngIf="meal.editMode">
-            <input mdInput placeholder="Meal name" [(value)]="meal.name">
+            <input mdInput placeholder="Meal name" [(ngModel)]="meal.name">
           </md-input-container>
         </md-card-subtitle>
         <md-card-subtitle>
@@ -32,21 +40,15 @@
           </md-input-container>
         </md-card-subtitle>
         <span class="spacer"></span>
-        <div class="button-col">
-          <button md-mini-fab (click)="os.updateMeal(order, meal)" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
+        <div class="button-col" *ngIf="!order.completed">
+          <button md-mini-fab (click)="orderService.updateMeal(order, meal); meal.editMode = false" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
           <button md-mini-fab (click)="meal.editMode = true" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>edit_mode</md-icon></button>
-          <button md-mini-fab (click)="os.deleteMeal(order, meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
+          <button md-mini-fab (click)="orderService.deleteMeal(order, meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
           <button md-mini-fab color="accent" *ngIf="meal.editMode" (click)="meal.editMode = false"><md-icon>cancel</md-icon></button>
         </div>
       </md-card-header>
     </md-card>
     <strong>Overall price: {{order.meals | pluck: 'price' | truthify | sumPrice}} € </strong>
-    <div *ngIf="currentUser && (currentUser.uid === order.createdFrom.uid)">
-      <md-divider></md-divider>
-      <md-input-container class="full-width">
-        <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
-      </md-input-container>
-      <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(deliveryTime.value)">complete order</button>
-    </div>
+
   </div>
 </ng-template>

@@ -7,7 +7,7 @@ import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.comp
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsModule } from '@angular/forms';
 @Component({
-  selector: 'app-order-detail',
+  selector: 'app-order-detail-dialog',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })

@@ -5,7 +5,6 @@
   <button md-icon-button [mdMenuTriggerFor]="menu">
   <md-icon class="toolbar-icon">account_box</md-icon>
 </button>
-
   <md-menu #menu="mdMenu">
     <button md-menu-item [routerLink]="['register']" *ngIf="!afAuth.auth.currentUser">
     <md-icon>person_add</md-icon>

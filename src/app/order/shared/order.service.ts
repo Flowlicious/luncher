@@ -72,7 +72,6 @@ export class OrderService {
       meals = data.meals;
     });
     const deleteIndex = meals.findIndex(m => m.id === meal.id);
-    debugger;
     meals.splice(deleteIndex, deleteIndex + 1);
     orderToUpdate.update({ meals: meals });
   }
