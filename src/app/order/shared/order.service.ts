@@ -77,6 +77,11 @@ export class OrderService {
     order.meals = meals;
   }
 
+/**
+ * Updates a meal from an order
+ * @param order The order to update the meal from
+ * @param meal The meal to be updated
+ */
   updateMeal(order: Order, meal: Meal) {
     const orderToUpdate: FirebaseObjectObservable<Order> = this.getByKey(order.$key);
     let meals = [];
