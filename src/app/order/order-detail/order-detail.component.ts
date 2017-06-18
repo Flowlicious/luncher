@@ -27,7 +27,6 @@ export class OrderDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     this.afAuth.authState.subscribe((auth) => {
       this.currentUser = auth;
     });
