@@ -11,6 +11,7 @@ import { AddOrderDialogComponent } from 'app/order/add-order/add-order.dialog.co
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { OrderService } from './shared/order.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component(
   {

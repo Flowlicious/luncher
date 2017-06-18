@@ -22,13 +22,14 @@ export class OrderDetailComponent implements OnInit {
       this.currentUser = auth;
     });
     if (!this.orderid) {
-      this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
+      this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
         .subscribe((order: Order) => {
           this.order = order;
         });
     } else {
-      this.orderService.getByKey(this.orderid).subscribe((order: Order) => {
+      this.orderService.getOrderByKey(this.orderid).subscribe((order: Order) => {
         this.order = order;
+        this.order.meals = this.orderService.getMealsByOrderKey(order.$key);
       });
     }
   }

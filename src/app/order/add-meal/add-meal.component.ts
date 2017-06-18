@@ -30,7 +30,7 @@ export class AddMealComponent extends IAddMealComponent {
   onSave() {
     if (this.form.invalid) { return; }
     const meal = this.prepareSaveMeal();
-    this.os.addMeal(this.order, meal);
+    this.os.addMeal(meal);
     this.router.navigate(['/order']);
   }
 }
