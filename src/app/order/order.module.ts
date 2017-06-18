@@ -6,7 +6,7 @@ import { OrderService } from './shared/order.service';
 import { AddMealComponent } from './add-meal/add-meal.component';
 import { AddMealDialogComponent } from './add-meal/add-meal.dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MaterialModule, MdDialogRef } from '@angular/material';
+import { MaterialModule, MdDialogRef, MdSnackBarRef } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -19,6 +19,7 @@ import { SumPricePipe } from './shared/sum-price.pipe';
 import { AddOrderDialogComponent } from 'app/order/add-order/add-order.dialog.component';
 import { UndoSnackComponent } from 'app/order/shared/undoSnackComponent';
 import { UndoService } from 'app/order/shared/undoService';
+import { SnackService } from 'app/order/shared/snackService';
 @NgModule({
   imports: [
     CommonModule,
@@ -31,7 +32,7 @@ import { UndoService } from 'app/order/shared/undoService';
     NgMathPipesModule,
     FormsModule
   ],
-  providers: [OrderService, UndoService],
+  providers: [OrderService, UndoService, SnackService],
   declarations: [OrderComponent, AddOrderComponent, AddMealComponent, AddMealDialogComponent, OrderDetailDialogComponent,
     OrderDetailComponent, AddOrderDialogComponent, OrderCardComponent, SumPricePipe, UndoSnackComponent],
   entryComponents: [AddOrderComponent, AddMealComponent, OrderDetailDialogComponent, AddMealDialogComponent, AddOrderDialogComponent,

@@ -43,7 +43,7 @@
         <div class="button-col" *ngIf="!order.completed">
           <button md-mini-fab (click)="orderService.updateMeal(meal); meal.editMode = false" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
           <button md-mini-fab (click)="meal.editMode = true" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>edit_mode</md-icon></button>
-          <button md-mini-fab (click)="orderService.deleteMeal(meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
+          <button md-mini-fab (click)="deleteMeal(meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
           <button md-mini-fab color="accent" *ngIf="meal.editMode" (click)="meal.editMode = false"><md-icon>cancel</md-icon></button>
         </div>
       </md-card-header>

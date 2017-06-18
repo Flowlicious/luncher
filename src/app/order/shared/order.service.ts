@@ -2,18 +2,15 @@ import { Meal } from './../models/meal';
 import { Order } from './../models/order';
 import { FirebaseListObservable, FirebaseObjectObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
-import { UndoService } from 'app/order/shared/undoService';
-import { UndoAction } from 'app/order/models/undoAction';
-import { MdSnackBar } from '@angular/material';
-import { UndoSnackComponent } from 'app/order/shared/undoSnackComponent';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/switchMap';
+import { UndoAction } from 'app/order/models/undoAction';
 @Injectable()
 export class OrderService {
   public orders: FirebaseListObservable<Order[]>;
   public meals: FirebaseListObservable<Meal[]>;
-  constructor(private afDb: AngularFireDatabase, private undoService: UndoService, private snackbar: MdSnackBar) {
+  constructor(private afDb: AngularFireDatabase) {
     this.orders = afDb.list('/orders');
     this.meals = afDb.list('/meals');
   }
@@ -72,18 +69,7 @@ export class OrderService {
    * @param meal The meal to add
    */
   addMeal(meal: Meal) {
-    /*    const orderToUpdate: FirebaseObjectObservable<Order> = this.getByKey(order.$key);
-        let meals = [];
-        orderToUpdate.subscribe(data => {
-          if (!data.meals) {
-            data.meals = [];
-          }
-          meals = data.meals;
-        });
-        meal.id = new Date().getTime();
-        meals.push(meal);*/
     this.meals.push(meal);
-    // orderToUpdate.update({ meals: meals });
   }
 
   /**
@@ -92,21 +78,7 @@ export class OrderService {
    * @param meal The meal to delete
    */
   deleteMeal(meal: Meal) {
-    this.meals.remove(meal.$key);
-    /*    const orderToUpdate: FirebaseObjectObservable<Order> = this.getByKey(order.$key);
-        let meals = [];
-        orderToUpdate.subscribe(data => {
-          if (!data.meals) {
-            data.meals = [];
-          }
-          meals = data.meals;
-        });
-        const deleteIndex = meals.findIndex(m => m.id === meal.id);
-        meals.splice(deleteIndex, deleteIndex + 1);
-        orderToUpdate.update({ meals: meals });
-        order.meals = meals;*/
-    this.undoService.addAction(new UndoAction(UndoAction.actionDelete, meal, '/orders'));
-    this.snackbar.openFromComponent(UndoSnackComponent);
+    return this.meals.remove(meal.$key);
   }
 
   /**
@@ -116,20 +88,7 @@ export class OrderService {
    */
   updateMeal(meal: Meal) {
     const mealToUpdate: FirebaseObjectObservable<Meal> = this.getMealByKey(meal.$key);
-    debugger;
     mealToUpdate.update({ info: meal.info, name: meal.name, price: meal.price });
-    /*  let meals = [];
-      orderToUpdate.subscribe(data => {
-        if (!data.meals) {
-          data.meals = [];
-        }
-        meals = data.meals;
-      });
-      const mealIndex = meals.findIndex(m => m.id === meal.id);
-      meals[mealIndex].info = meal.info;
-      meals[mealIndex].name = meal.name;
-      meals[mealIndex].price = meal.price;*/
-    // orderToUpdate.update({ meals: meals });
   }
 
   /**
@@ -142,6 +101,17 @@ export class OrderService {
       orderToUpdate.update({ completed: true, delivery: order.delivery });
     } else {
       orderToUpdate.update({ completed: true });
+    }
+  }
+
+
+  undo(action) {
+    switch (action.collection) {
+      case '/meals':
+        if (action.action === UndoAction.actionDelete) {
+          this.addMeal(action.object);
+        }
+        break;
     }
   }
 

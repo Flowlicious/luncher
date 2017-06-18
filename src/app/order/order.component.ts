@@ -38,7 +38,8 @@ export class OrderComponent implements OnInit {
   public selectedOrder: Order;
   public orderOpen: String = 'close';
 
-  constructor(private dialog: MdDialog, private orderService: OrderService, public afAuth: AngularFireAuth, private router: Router) { }
+  constructor(private dialog: MdDialog, private orderService: OrderService, public afAuth: AngularFireAuth, private router: Router,
+  ) { }
 
   ngOnInit() {
     this.afAuth.authState.subscribe((auth) => {
@@ -60,9 +61,7 @@ export class OrderComponent implements OnInit {
   }
 
   updateSelectedOrder(event: any) {
-    // if (this.orderOpen !== 1) {
     this.orderOpen = 'open';
-    // }
     this.selectedOrder = event.selectedOrder;
   }
 }
