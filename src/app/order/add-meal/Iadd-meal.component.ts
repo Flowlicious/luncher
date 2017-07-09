@@ -23,7 +23,7 @@ export class IAddMealComponent {
       this.currentUser = auth;
     });
     if (this.route) {
-      this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
+      this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
         .subscribe((order: Order) => this.order = order);
     }
   }
@@ -38,7 +38,8 @@ export class IAddMealComponent {
       name: formModel.name as string,
       info: formModel.info as string,
       createdFrom: new OrderUser(this.currentUser),
-      price: formModel.price as number
+      price: formModel.price as number,
+      orderKey: this.order.$key
     };
     return saveMeal;
   }

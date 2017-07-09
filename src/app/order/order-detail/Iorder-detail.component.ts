@@ -13,7 +13,7 @@ export class IOrderDetailComponent {
       this.currentUser = auth;
     });
     if (this.route) {
-      this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
+      this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
         .subscribe((order: Order) => {
           this.order = order;
         });

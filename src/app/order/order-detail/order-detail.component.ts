@@ -5,6 +5,8 @@ import { Order } from './../models/order';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { SnackService } from 'app/order/shared/snackService';
+import { UndoAction } from 'app/order/models/undoAction';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
@@ -14,7 +16,14 @@ export class OrderDetailComponent implements OnInit {
   currentUser: any;
   @Input() orderid: string;
   public order: Order;
-  constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router) {
+  constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
+    private snackService: SnackService) {
+  }
+  ngOnChanges() {
+    this.orderService.getOrderByKey(this.orderid).subscribe((order: Order) => {
+      this.order = order;
+      this.order.meals = this.orderService.getMealsByOrderKey(order.$key);
+    });
   }
 
   ngOnInit() {
@@ -22,13 +31,15 @@ export class OrderDetailComponent implements OnInit {
       this.currentUser = auth;
     });
     if (!this.orderid) {
-      this.route.params.switchMap((params: Params) => this.orderService.getByKey(params['orderid']))
+      this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
         .subscribe((order: Order) => {
           this.order = order;
+          this.order.meals = this.orderService.getMealsByOrderKey(order.$key);
         });
     } else {
-      this.orderService.getByKey(this.orderid).subscribe((order: Order) => {
+      this.orderService.getOrderByKey(this.orderid).subscribe((order: Order) => {
         this.order = order;
+        this.order.meals = this.orderService.getMealsByOrderKey(order.$key);
       });
     }
   }
@@ -43,5 +54,11 @@ export class OrderDetailComponent implements OnInit {
     this.order.delivery = deliveryTime;
     this.orderService.completeOrder(this.order);
     this.router.navigate(['/order']);
+  }
+
+  deleteMeal(meal) {
+    this.orderService.deleteMeal(meal).then(() => {
+      this.snackService.openUndoSnack(new UndoAction(UndoAction.actionDelete, meal, '/meals'));
+    });
   }
 }

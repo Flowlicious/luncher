@@ -34,7 +34,6 @@ export class OrderCardComponent implements OnInit {
    */
   openOrderDetail(order: Order) {
     if (!MobileService.isMobile) {
-      // this.dialog.open(OrderDetailDialogComponent, { data: order });
       this.updateSelectedOrder.emit({
         selectedOrder: order
       });
