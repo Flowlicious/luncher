@@ -8,6 +8,7 @@ import { MdDialogRef } from '@angular/material';
 import { OrderUser } from 'app/order/models/user';
 import { IAddOrderComponent } from 'app/order/add-order/Iadd-order.component';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { OrderActionCreator } from 'app/state/order/order.actioncreator';
 @Component({
   selector: 'app-add-order',
   templateUrl: './add-order.component.html',
@@ -18,8 +19,8 @@ export class AddOrderDialogComponent extends IAddOrderComponent {
   form: FormGroup;
   currentUser: any;
   constructor(public dialogRef: MdDialogRef<AddOrderDialogComponent>, private os: OrderService,
-    private angularFireAuth: AngularFireAuth, private fb: FormBuilder) {
-      super(os, angularFireAuth, fb, null);
+    private angularFireAuth: AngularFireAuth, private fb: FormBuilder, private orderActionCreator: OrderActionCreator) {
+    super(os, angularFireAuth, fb, null);
   }
 
 
@@ -29,7 +30,7 @@ export class AddOrderDialogComponent extends IAddOrderComponent {
   onSave() {
     if (this.form.invalid) { return; }
     const order = this.prepareSaveOrder();
-    this.os.add(order);
+    this.orderActionCreator.addOrder(order);
     this.dialogRef.close();
   }
 
