@@ -6,10 +6,10 @@ import * as createLoggerRef from 'redux-logger';
 import { combineReducers } from 'redux';
 import { OrderReducer } from '../state/order/order.reducer';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
-import { OrderEpic } from '../state/order/order.epic';
 import 'rxjs/add/observable/forkJoin';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Order } from 'app/order/models/order';
+import { SelectedOrderReducer } from 'app/state/selectedOrder/selectOrder.reducer';
 
 @Injectable()
 export class StoreService {
@@ -17,7 +17,6 @@ export class StoreService {
   constructor(
     private ngRedux: NgRedux<IAppState>,
     private devTools: DevToolsExtension,
-    private orderEpic: OrderEpic,
     private afDb: AngularFireDatabase
   ) { }
 
@@ -28,39 +27,27 @@ export class StoreService {
         equalTo: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
       }
     }).first().subscribe((orderArray = []) => {
-    this._initStore(orderArray);
+      this._initStore(orderArray);
     }, () => {
       this._initStore([]);
     });
-
   }
 
   private _initStore(orders): void {
     const initialState = {
-      orders: orders
+      orders: orders,
+      selectedOrder: null
     };
     const enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
-    const orderEpics = combineEpics<any, IAppState>(
-      this.orderEpic.addOrder,
-      this.orderEpic.completeOrder
-    );
-    const middleware = [createEpicMiddleware(orderEpics)];
     const rootReducer = combineReducers<IAppState>({
-      orders: OrderReducer
+      orders: OrderReducer,
+      selectedOrder: SelectedOrderReducer
     });
-
-    if (true) {
-      middleware.push(
-        (createLoggerRef as any).createLogger({
-          level: 'info',
-          collapsed: true
-        }));
-    }
 
     this.ngRedux.configureStore(
       rootReducer,
       initialState as IAppState,
-      middleware,
+      null,
       enhancers
     );
   }

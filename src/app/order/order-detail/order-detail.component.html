@@ -8,14 +8,14 @@
       <span>Order at: {{order.where}}</span>
     </md-toolbar>
     <h3 id="headline">Order at: {{order.where}}</h3>
-    <div *ngIf="currentUser && (currentUser.uid === order.createdFrom.uid)">
+    <div *ngIf="currentUser && order.createdFrom && (currentUser.uid === order.createdFrom.uid)">
       <md-input-container class="full-width">
         <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
       </md-input-container>
       <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(deliveryTime.value)">complete order</button>
       <md-divider></md-divider>
     </div>
-    <md-card *ngFor="let meal of order.meals  | async" class="orderCard">
+    <md-card *ngFor="let meal of order.meals" class="orderCard">
       <md-card-header>
         <div md-card-avatar class="control-col">
           <md-icon>local_pizza</md-icon>
@@ -48,7 +48,7 @@
         </div>
       </md-card-header>
     </md-card>
-    <strong>Overall price: {{order.meals  | async | pluck: 'price' | truthify | sumPrice}} € </strong>
+    <strong>Overall price: {{order.meals | pluck: 'price' | truthify | sumPrice}} € </strong>
 
   </div>
 </ng-template>

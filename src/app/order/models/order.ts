@@ -7,7 +7,7 @@ export class Order extends BaseModel {
   public when?: string;
   public description?: string;
   public url?: string;
-  public meals?: FirebaseListObservable<Meal[]>;
+  public meals?: Meal[];
   public completed?: boolean;
   public createdAt?: number;
   public createdFrom?: OrderUser;

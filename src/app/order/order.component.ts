@@ -12,6 +12,12 @@ import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { OrderService } from './shared/order.service';
 import { Observable } from 'rxjs/Observable';
+import { IAppState } from 'app/state/state.type';
+import { select } from '@angular-redux/store/lib/src';
+
+const selectOrdersFromStore = (appState: IAppState) => {
+  return appState.orders;
+}
 
 @Component(
   {
@@ -34,19 +40,19 @@ import { Observable } from 'rxjs/Observable';
     ]
   })
 export class OrderComponent implements OnInit {
-  public orders: FirebaseListObservable<Order[]>;
+  public orders: Order[];
   public selectedOrder: Order;
   public orderOpen: String = 'close';
-
+  @select(selectOrdersFromStore)
+  public ordersFromStore: Observable<Order[]>;
   constructor(private dialog: MdDialog, private orderService: OrderService, public afAuth: AngularFireAuth, private router: Router,
-  ) { }
+  ) {
+    this.ordersFromStore.subscribe((orders: Order[]) => {
+      this.orders = orders;
+    })
+  }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe((auth) => {
-      if (auth) {
-        this.orders = this.orderService.getAllToday();
-      }
-    });
   }
 
   /**

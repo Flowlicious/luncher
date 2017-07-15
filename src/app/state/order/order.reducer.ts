@@ -7,7 +7,6 @@ const orderActionHandlerList: IActionHandlerMap<IOrderState, IOrderAction> = {
     return [...state, action.payload];
   },
   [ORDER_COMPLETE]: (state: IOrderState, action: IOrderItemAction): IOrderState => {
-    // return [, action.payload];
     return state.map(order => order.$key === action.payload.$key ? { ...order, completed: action.payload.completed } : order);
   },
 }

@@ -15,8 +15,9 @@ import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 import { StoreService } from 'app/service/store.service';
 import { NgReduxModule } from '@angular-redux/store/lib/src';
-import { OrderEpic } from 'app/state/order/order.epic';
 import { OrderActionCreator } from 'app/state/order/order.actioncreator';
+import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
+import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { OrderActionCreator } from 'app/state/order/order.actioncreator';
     AngularFireAuthModule,
     NgReduxModule
   ],
-  providers: [StoreService, OrderEpic, OrderActionCreator],
+  providers: [StoreService, OrderActionCreator, MealActionCreator, SelectedOrderActionCreator],
   bootstrap: [AppComponent]
 })
 export class AppModule {

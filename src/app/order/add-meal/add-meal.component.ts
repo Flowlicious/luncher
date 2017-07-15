@@ -8,6 +8,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { OrderUser } from 'app/order/models/user';
 import { IAddMealComponent } from 'app/order/add-meal/Iadd-meal.component';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
+import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 
 @Component({
   selector: 'app-add-meal',
@@ -20,8 +22,9 @@ export class AddMealComponent extends IAddMealComponent {
   currentUser: any;
   order: Order;
   constructor(private os: OrderService, private fb: FormBuilder, private afAuth: AngularFireAuth, private router: Router,
-    private _route: ActivatedRoute) {
-    super(os, fb, afAuth, _route);
+    private _route: ActivatedRoute, private mealActionCreator: MealActionCreator,
+    public selectedOrderActionCreator: SelectedOrderActionCreator) {
+    super(os, fb, afAuth, _route, selectedOrderActionCreator);
   }
 
   /**
@@ -30,7 +33,7 @@ export class AddMealComponent extends IAddMealComponent {
   onSave() {
     if (this.form.invalid) { return; }
     const meal = this.prepareSaveMeal();
-    this.os.addMeal(meal);
+     this.selectedOrderActionCreator.addMeal(meal, this._selectedOrder !== null);
     this.router.navigate(['/order']);
   }
 }

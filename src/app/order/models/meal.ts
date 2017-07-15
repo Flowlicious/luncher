@@ -1,10 +1,10 @@
 import { OrderUser } from './user';
 import { BaseModel } from 'app/common/baseModel';
 export class Meal extends BaseModel {
-  public id: number;
-  public name: string;
-  public info: string;
-  public orderKey: string;
+  public id?: number;
+  public name?: string;
+  public info?: string;
+  public orderKey?: string;
   public createdFrom?: OrderUser;
   public price?: Number;
   constructor(createdFrom: OrderUser) {
