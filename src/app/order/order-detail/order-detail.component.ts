@@ -5,7 +5,6 @@ import { Order } from './../models/order';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { SnackService } from 'app/order/shared/snackService';
 import { UndoAction } from 'app/order/models/undoAction';
 import { select } from '@angular-redux/store';
 import { IAppState } from '../../state/state.type';
@@ -14,9 +13,14 @@ import { Observable } from 'rxjs/Observable';
 import { FirebaseService } from 'app/service/firebase.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
+import { UndoService } from 'app/order/shared/undo.service';
 
 export const selectedOrderFromStore = (appState: IAppState) => {
   return appState.selectedOrder;
+}
+
+export const selectUndoActionFromStore = (appState: IAppState) => {
+  return appState.undoAction;
 }
 
 @Component({
@@ -31,10 +35,13 @@ export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
   @select(selectedOrderFromStore)
   public selectedOrder: Observable<Order>;
   private mealSubscription: Subscription;
+  @select(selectUndoActionFromStore)
+  private undoActionFromStore: Observable<UndoAction>;
 
   constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
-    private snackService: SnackService, private selectedOrderActionCreator: SelectedOrderActionCreator,
-    private mealActionCreator: MealActionCreator, private firebaseService: FirebaseService) {
+    private selectedOrderActionCreator: SelectedOrderActionCreator,
+    private mealActionCreator: MealActionCreator, private firebaseService: FirebaseService,
+    private undoService: UndoService) {
   }
   ngOnChanges() {
     this.selectedOrderActionCreator.selectOrder(this.orderid);
@@ -48,7 +55,11 @@ export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedOrder.subscribe((selected) => {
       this.order = selected;
     })
-
+    this.undoActionFromStore.subscribe((undoAction) => {
+      if (undoAction) {
+        this.undoService.openUndoSnack();
+      }
+    })
     this.afAuth.authState.subscribe((auth) => {
       this.currentUser = auth;
     });
@@ -77,9 +88,7 @@ export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   deleteMeal(meal) {
-    this.orderService.deleteMeal(meal).then(() => {
-      this.snackService.openUndoSnack(new UndoAction(UndoAction.actionDelete, meal, '/meals'));
-    });
+    this.mealActionCreator.deleteMeal(meal);
   }
 
   updateMeal(meal) {

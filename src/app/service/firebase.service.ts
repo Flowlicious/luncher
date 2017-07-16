@@ -42,6 +42,10 @@ export class FirebaseService {
     });
   }
 
+  /**
+   * Subscribes to a List of Meals from Firebase
+   * @param orderKey The key to find the Meals for Order
+   */
   acitvateMealSync(orderKey: string): Subscription {
     return this.afDb.list('/meals', {
       query: {
@@ -56,6 +60,10 @@ export class FirebaseService {
     })
   }
 
+  /**
+   * Cancels the Subscription
+   * @param subscription subscription to be canceled
+   */
   deactivateMealSync(subscription: Subscription) {
     subscription.unsubscribe();
   }

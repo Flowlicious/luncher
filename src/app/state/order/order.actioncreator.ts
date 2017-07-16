@@ -15,6 +15,10 @@ export class OrderActionCreator {
     this.orders = afDb.list('/orders');
   }
 
+  /**
+   * Adds the order to firebase
+   * @param order the order to be added
+   */
   public addOrder(order: Order): void {
     this.ngRedux.dispatch({
       type: ORDER_ADD_ATTEMPT,

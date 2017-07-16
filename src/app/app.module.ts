@@ -19,6 +19,7 @@ import { OrderActionCreator } from 'app/state/order/order.actioncreator';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 import { FirebaseService } from 'app/service/firebase.service';
+import { UndoActionCreator } from 'app/state/undo/undo.actioncreator';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { FirebaseService } from 'app/service/firebase.service';
     AngularFireAuthModule,
     NgReduxModule,
   ],
-  providers: [StoreService, OrderActionCreator, MealActionCreator, SelectedOrderActionCreator, FirebaseService],
+  providers: [StoreService, OrderActionCreator, MealActionCreator, SelectedOrderActionCreator, FirebaseService, UndoActionCreator],
   bootstrap: [AppComponent]
 })
 export class AppModule {

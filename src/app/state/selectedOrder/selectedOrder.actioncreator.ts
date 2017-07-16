@@ -4,7 +4,7 @@ import { IAppState } from '../state.type';
 import { Order } from 'app/order/models/order';
 import { ORDER_ADD_ATTEMPT, ORDER_ADD } from 'app/state/order/order.action';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
-import { SELECT_ORDER, SELECTEDORDER_ADD_MEAL, SELECTEDORDER_ORDER_COMPLETE_ATTEMPT } from 'app/state/selectedOrder/selectedOrder.action';
+import { SELECT_ORDER, SELECTEDORDER_ORDER_COMPLETE_ATTEMPT } from 'app/state/selectedOrder/selectedOrder.action';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { Meal } from 'app/order/models/meal';
 
@@ -21,6 +21,10 @@ export class SelectedOrderActionCreator {
     this.meals = afDb.list('/meals');
   }
 
+  /**
+   * Sets the selectedOrder object in the state and reads meals
+   * @param key the key of the order to be selected
+   */
   public selectOrder(key: string): void {
     this.afDb.object(`/orders/${key}`).subscribe((order: Order) => {
       this.afDb.list('/meals', {
@@ -39,6 +43,10 @@ export class SelectedOrderActionCreator {
     });
   }
 
+  /**
+   * completes the selected order
+   * @param order the order to be completed
+   */
   public completeOrder(order: Order) {
     this.ngRedux.dispatch({
       type: SELECTEDORDER_ORDER_COMPLETE_ATTEMPT,
