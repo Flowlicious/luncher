@@ -10,9 +10,9 @@
     <h3 id="headline">Order at: {{order.where}}</h3>
     <div *ngIf="currentUser && order.createdFrom && (currentUser.uid === order.createdFrom.uid)">
       <md-input-container class="full-width">
-        <input mdInput placeholder="Estimated delivery" (value)="order.delivery">
+        <input mdInput placeholder="Estimated delivery" #delivery>
       </md-input-container>
-      <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(deliveryTime.value)">complete order</button>
+      <button md-raised-button color="primary" [disabled]="order.completed || currentUser.uid !== order.createdFrom.uid" (click)="onComplete(delivery.value)">complete order</button>
       <md-divider></md-divider>
     </div>
     <md-card *ngFor="let meal of order.meals" class="orderCard">
@@ -41,7 +41,7 @@
         </md-card-subtitle>
         <span class="spacer"></span>
         <div class="button-col" *ngIf="!order.completed">
-          <button md-mini-fab (click)="orderService.updateMeal(meal); meal.editMode = false" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
+          <button md-mini-fab (click)="updateMeal(meal); meal.editMode = false" color="primary" *ngIf="meal.editMode"><md-icon>save</md-icon></button>
           <button md-mini-fab (click)="meal.editMode = true" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>edit_mode</md-icon></button>
           <button md-mini-fab (click)="deleteMeal(meal)" color="warn" *ngIf="!meal.editMode && meal.createdFrom.uid == afAuth.auth.currentUser.uid"><md-icon>delete</md-icon></button>
           <button md-mini-fab color="accent" *ngIf="meal.editMode" (click)="meal.editMode = false"><md-icon>cancel</md-icon></button>

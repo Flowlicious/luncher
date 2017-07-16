@@ -1,6 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrderService } from './../shared/order.service';
-import { Component, OnInit, Inject, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Order } from './../models/order';
 import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -11,6 +11,9 @@ import { select } from '@angular-redux/store';
 import { IAppState } from '../../state/state.type';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 import { Observable } from 'rxjs/Observable';
+import { FirebaseService } from 'app/service/firebase.service';
+import { Subscription } from 'rxjs/Subscription';
+import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 
 export const selectedOrderFromStore = (appState: IAppState) => {
   return appState.selectedOrder;
@@ -21,18 +24,24 @@ export const selectedOrderFromStore = (appState: IAppState) => {
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit, OnChanges {
+export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
   public order: Order;
   @Input() orderid: string;
   currentUser: any;
   @select(selectedOrderFromStore)
   public selectedOrder: Observable<Order>;
+  private mealSubscription: Subscription;
 
   constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
-    private snackService: SnackService, private selectedOrderActionCreator: SelectedOrderActionCreator) {
+    private snackService: SnackService, private selectedOrderActionCreator: SelectedOrderActionCreator,
+    private mealActionCreator: MealActionCreator, private firebaseService: FirebaseService) {
   }
   ngOnChanges() {
     this.selectedOrderActionCreator.selectOrder(this.orderid);
+  }
+
+  ngOnDestroy() {
+    this.firebaseService.deactivateMealSync(this.mealSubscription);
   }
 
   ngOnInit() {
@@ -52,6 +61,7 @@ export class OrderDetailComponent implements OnInit, OnChanges {
     } else {
       this.selectedOrderActionCreator.selectOrder(this.orderid);
     }
+    this.mealSubscription = this.firebaseService.acitvateMealSync(this.orderid);
   }
   /**
    * Completes an order with an optional estimated delivery time
@@ -62,7 +72,7 @@ export class OrderDetailComponent implements OnInit, OnChanges {
       return;
     }
     this.order.delivery = deliveryTime;
-    this.orderService.completeOrder(this.order);
+    this.selectedOrderActionCreator.completeOrder(this.order);
     this.router.navigate(['/order']);
   }
 
@@ -70,5 +80,9 @@ export class OrderDetailComponent implements OnInit, OnChanges {
     this.orderService.deleteMeal(meal).then(() => {
       this.snackService.openUndoSnack(new UndoAction(UndoAction.actionDelete, meal, '/meals'));
     });
+  }
+
+  updateMeal(meal) {
+    this.mealActionCreator.updateMeal(meal);
   }
 }

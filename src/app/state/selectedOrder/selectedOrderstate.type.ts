@@ -16,3 +16,6 @@ export interface ISelectedOrderMealAction extends ISelectedOrderAction {
     payload?: Meal;
 }
 
+export interface ISelectedOrderMealsAction extends ISelectedOrderAction {
+    payload?: Meal[];
+}

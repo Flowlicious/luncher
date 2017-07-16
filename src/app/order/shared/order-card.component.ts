@@ -2,7 +2,6 @@ import { AddMealDialogComponent } from '../add-meal/add-meal.dialog.component';
 import { Router } from '@angular/router';
 import { MobileService } from '../../common/mobileSerivce';
 import { AddMealComponent } from '../add-meal/add-meal.component';
-import { OrderDetailDialogComponent } from '../order-detail/order-detail.dialog.component';
 import { Order } from '../models/order';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';

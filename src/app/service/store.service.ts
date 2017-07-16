@@ -21,16 +21,17 @@ export class StoreService {
   ) { }
 
   public initStore(): void {
-    const orders = this.afDb.list('/orders', {
-      query: {
-        orderByChild: 'createdAt',
-        equalTo: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
-      }
-    }).first().subscribe((orderArray = []) => {
-      this._initStore(orderArray);
-    }, () => {
-      this._initStore([]);
-    });
+    this._initStore([]);
+    /*     const orders = this.afDb.list('/orders', {
+          query: {
+            orderByChild: 'createdAt',
+            equalTo: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()
+          }
+        }).first().subscribe((orderArray = []) => {
+          this._initStore(orderArray);
+        }, () => {
+
+        }); */
   }
 
   private _initStore(orders): void {

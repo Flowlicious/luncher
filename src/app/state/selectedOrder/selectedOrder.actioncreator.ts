@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { IAppState } from '../state.type';
 import { Order } from 'app/order/models/order';
-import { ORDER_ADD_ATTEMPT, ORDER_COMPLETE_ATTEMPT, ORDER_ADD } from 'app/state/order/order.action';
+import { ORDER_ADD_ATTEMPT, ORDER_ADD } from 'app/state/order/order.action';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
-import { SELECT_ORDER, SELECTEDORDER_ADD_MEAL } from 'app/state/selectedOrder/selectedOrder.action';
+import { SELECT_ORDER, SELECTEDORDER_ADD_MEAL, SELECTEDORDER_ORDER_COMPLETE_ATTEMPT } from 'app/state/selectedOrder/selectedOrder.action';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { Meal } from 'app/order/models/meal';
 
@@ -39,14 +39,16 @@ export class SelectedOrderActionCreator {
     });
   }
 
-  public addMeal(meal: Meal, isSelectedOrder: boolean): void {
-    this.mealActionCreator.addMeal(meal).then((addedMeal) => {
-      if (isSelectedOrder) { // If an order is selected, add the meal to the meals array
-        this.ngRedux.dispatch({
-          type: SELECTEDORDER_ADD_MEAL,
-          payload: addedMeal
-        });
-      };
+  public completeOrder(order: Order) {
+    this.ngRedux.dispatch({
+      type: SELECTEDORDER_ORDER_COMPLETE_ATTEMPT,
+      payload: order
     });
+    const orderToUpdate = this.afDb.object(`/orders/${order.$key}`)
+    if (order.delivery) {
+      orderToUpdate.update({ completed: true, delivery: order.delivery });
+    } else {
+      orderToUpdate.update({ completed: true });
+    }
   }
 }

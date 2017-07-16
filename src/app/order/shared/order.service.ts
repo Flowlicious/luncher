@@ -6,15 +6,17 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/switchMap';
 import { UndoAction } from 'app/order/models/undoAction';
+import { NgRedux } from '@angular-redux/store/lib/src';
+import { IAppState } from 'app/state/state.type';
+import { ORDER_ADD, ORDER_UPDATE } from 'app/state/order/order.action';
 @Injectable()
 export class OrderService {
   public orders: FirebaseListObservable<Order[]>;
   public meals: FirebaseListObservable<Meal[]>;
-  constructor(private afDb: AngularFireDatabase) {
+  constructor(private afDb: AngularFireDatabase, private ngRedux: NgRedux<IAppState>) {
     this.orders = afDb.list('/orders');
     this.meals = afDb.list('/meals');
   }
-
   /**
    * Gets all orders of today
    */

@@ -18,6 +18,7 @@ import { NgReduxModule } from '@angular-redux/store/lib/src';
 import { OrderActionCreator } from 'app/state/order/order.actioncreator';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
+import { FirebaseService } from 'app/service/firebase.service';
 
 @NgModule({
   declarations: [
@@ -36,13 +37,14 @@ import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrde
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    NgReduxModule
+    NgReduxModule,
   ],
-  providers: [StoreService, OrderActionCreator, MealActionCreator, SelectedOrderActionCreator],
+  providers: [StoreService, OrderActionCreator, MealActionCreator, SelectedOrderActionCreator, FirebaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(storeService: StoreService) {
+  constructor(storeService: StoreService, firebaseService: FirebaseService) {
     storeService.initStore();
+    firebaseService.initFirebaseSync();
   }
 }

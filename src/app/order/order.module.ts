@@ -1,6 +1,5 @@
 import { NgxErrorsModule } from '@ultimate/ngxerrors';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { OrderDetailDialogComponent } from './order-detail/order-detail.dialog.component';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
 import { OrderService } from './shared/order.service';
 import { AddMealComponent } from './add-meal/add-meal.component';
@@ -33,9 +32,10 @@ import { SnackService } from 'app/order/shared/snackService';
     FormsModule
   ],
   providers: [OrderService, UndoService, SnackService],
-  declarations: [OrderComponent, AddOrderComponent, AddMealComponent, AddMealDialogComponent, OrderDetailDialogComponent,
+  declarations: [OrderComponent, AddOrderComponent, AddMealComponent, AddMealDialogComponent,
     OrderDetailComponent, AddOrderDialogComponent, OrderCardComponent, SumPricePipe, UndoSnackComponent],
-  entryComponents: [AddOrderComponent, AddMealComponent, OrderDetailDialogComponent, AddMealDialogComponent, AddOrderDialogComponent,
+  entryComponents: [AddOrderComponent, AddMealComponent, AddMealDialogComponent, AddOrderDialogComponent,
     UndoSnackComponent]
 })
-export class OrderModule { }
+export class OrderModule {
+ }

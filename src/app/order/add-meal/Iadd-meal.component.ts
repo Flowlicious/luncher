@@ -9,23 +9,14 @@ import { IAppState } from 'app/state/state.type';
 import { select } from '@angular-redux/store/lib/src';
 import { Observable } from 'rxjs/Observable';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
-
-export const selectedOrderFromStore = (appState: IAppState) => {
-  return appState.selectedOrder;
-}
+import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 
 export class IAddMealComponent {
   order: Order;
   form: FormGroup;
   currentUser: any;
-  _selectedOrder: Order;
-  @select(selectedOrderFromStore)
-  public selectedOrder: Observable<Order>;
   constructor(private orderService: OrderService, private formBuilder: FormBuilder, private angularFireAuth: AngularFireAuth,
-    private route: ActivatedRoute, public selectedOrderActionCreator: SelectedOrderActionCreator) {
-        this.selectedOrder.subscribe((orderFromState) => {
-          this._selectedOrder = orderFromState;
-        })
+    private route: ActivatedRoute) {
     }
 
   ngOnInit() {
