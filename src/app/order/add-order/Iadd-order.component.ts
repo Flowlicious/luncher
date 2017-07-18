@@ -2,7 +2,6 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
@@ -12,7 +11,7 @@ export class IAddOrderComponent {
   order: Order;
   form: FormGroup;
   currentUser: any;
-  constructor(private orderService: OrderService, private afAuth: AngularFireAuth, private formBuilder: FormBuilder,
+  constructor(private afAuth: AngularFireAuth, private formBuilder: FormBuilder,
     private route: ActivatedRoute) { }
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -26,10 +25,10 @@ export class IAddOrderComponent {
       this.currentUser = auth;
     });
 
-    if (this.route) {
+/*     if (this.route) {
       this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
         .subscribe((order: Order) => this.order = order);
-    }
+    } */
   }
 
 

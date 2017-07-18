@@ -1,7 +1,6 @@
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Meal } from './../models/meal';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -19,10 +18,10 @@ export class AddMealComponent extends IAddMealComponent {
   public meal: Meal;
   form: FormGroup;
   currentUser: any;
-  order: Order;
-  constructor(private os: OrderService, private fb: FormBuilder, private afAuth: AngularFireAuth, private router: Router,
+  orderid: string;
+  constructor(private fb: FormBuilder, private afAuth: AngularFireAuth, private router: Router,
     private _route: ActivatedRoute, private mealActionCreator: MealActionCreator) {
-    super(os, fb, afAuth, _route);
+    super(fb, afAuth, _route);
   }
 
   /**

@@ -1,7 +1,6 @@
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
@@ -18,9 +17,9 @@ export class AddOrderDialogComponent extends IAddOrderComponent {
   order: Order;
   form: FormGroup;
   currentUser: any;
-  constructor(public dialogRef: MdDialogRef<AddOrderDialogComponent>, private os: OrderService,
-    private angularFireAuth: AngularFireAuth, private fb: FormBuilder, private orderActionCreator: OrderActionCreator) {
-    super(os, angularFireAuth, fb, null);
+  constructor(public dialogRef: MdDialogRef<AddOrderDialogComponent>, private angularFireAuth: AngularFireAuth,
+    private fb: FormBuilder, private orderActionCreator: OrderActionCreator) {
+    super(angularFireAuth, fb, null);
   }
 
 

@@ -1,7 +1,6 @@
 import { NgxErrorsModule } from '@ultimate/ngxerrors';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OrderDetailComponent } from './order-detail/order-detail.component';
-import { OrderService } from './shared/order.service';
 import { AddMealComponent } from './add-meal/add-meal.component';
 import { AddMealDialogComponent } from './add-meal/add-meal.dialog.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -30,7 +29,7 @@ import { UndoService } from 'app/order/shared/undo.service';
     NgMathPipesModule,
     FormsModule
   ],
-  providers: [OrderService, UndoService],
+  providers: [UndoService],
   declarations: [OrderComponent, AddOrderComponent, AddMealComponent, AddMealDialogComponent,
     OrderDetailComponent, AddOrderDialogComponent, OrderCardComponent, SumPricePipe, UndoSnackComponent],
   entryComponents: [AddOrderComponent, AddMealComponent, AddMealDialogComponent, AddOrderDialogComponent,

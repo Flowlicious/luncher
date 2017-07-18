@@ -1,6 +1,5 @@
 import { Validators } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Meal } from './../models/meal';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -19,10 +18,10 @@ export class AddMealDialogComponent extends IAddMealComponent {
   public meal: Meal;
   form: FormGroup;
   currentUser: any;
-  constructor( @Inject(MD_DIALOG_DATA) public order: Order, private dialogRef: MdDialogRef<AddMealDialogComponent>,
-    private os: OrderService, private fb: FormBuilder, private afAuth: AngularFireAuth,
+  constructor( @Inject(MD_DIALOG_DATA) public orderid: string, private dialogRef: MdDialogRef<AddMealDialogComponent>,
+    private fb: FormBuilder, private afAuth: AngularFireAuth,
     public mealActionCreator: MealActionCreator) {
-    super(os, fb, afAuth, null);
+    super(fb, afAuth, null);
   }
 
   /**

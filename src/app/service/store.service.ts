@@ -23,7 +23,7 @@ export class StoreService {
 
   private _initStore(orders): void {
     const initialState = {
-      orders: orders,
+      orders: null,
       selectedOrder: null,
       undoAction: null
     };

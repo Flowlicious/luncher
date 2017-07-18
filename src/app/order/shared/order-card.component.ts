@@ -6,12 +6,13 @@ import { Order } from '../models/order';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
+import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 
 @Component({ selector: 'app-order-card', templateUrl: './order-card.component.html', styleUrls: ['./order-card.component.css'] })
 export class OrderCardComponent implements OnInit {
   @Input() order: Order;
   @Output() updateSelectedOrder = new EventEmitter<any>();
-  constructor(private dialog: MdDialog, private router: Router) { }
+  constructor(private dialog: MdDialog, private router: Router, private selectedOrderActionCreator: SelectedOrderActionCreator) { }
 
   ngOnInit() { }
 
@@ -21,7 +22,7 @@ export class OrderCardComponent implements OnInit {
    */
   openMealDialog(order: Order) {
     if (!MobileService.isMobile) {
-      this.dialog.open(AddMealDialogComponent, { data: order });
+      this.dialog.open(AddMealDialogComponent, { data: order.$key });
     } else {
       this.router.navigate(['/add-meal', order.$key]);
     }
@@ -33,11 +34,13 @@ export class OrderCardComponent implements OnInit {
    */
   openOrderDetail(order: Order) {
     if (!MobileService.isMobile) {
-      this.updateSelectedOrder.emit({
+/*       this.updateSelectedOrder.emit({
         selectedOrder: order
-      });
+      }); */
+       this.selectedOrderActionCreator.selectOrder(this.order.$key);
     } else {
-      this.router.navigate(['/order-detail', order.$key]);
+      debugger;
+      this.router.navigate(['/order-detail', this.order.$key]);
     }
   }
 

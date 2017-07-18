@@ -2,9 +2,11 @@ import { IOrderAction, IOrderItemAction, IOrderListAction, IOrderState } from '.
 import { IActionHandlerMap, IReducerActionHandlerFunction } from '../state.type';
 import { ORDER_ADD, ORDER_UPDATE } from 'app/state/order/order.action';
 
+
 const orderActionHandlerList: IActionHandlerMap<IOrderState, IOrderAction> = {
   [ORDER_ADD]: (state: IOrderState, action: IOrderItemAction): IOrderState => {
-    return [...state, action.payload];
+    debugger;
+    return state == null ? Object.assign([], [action.payload]) : [...state, action.payload];
   },
   [ORDER_UPDATE]: (state: IOrderState, action: IOrderItemAction): IOrderState => {
     return state.map(order => order.$key === action.payload.$key ? action.payload : order);

@@ -1,4 +1,3 @@
-import { OrderService } from 'app/order/shared/order.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Order } from 'app/order/models/order';
 import { Meal } from 'app/order/models/meal';
@@ -12,10 +11,11 @@ import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrde
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 
 export class IAddMealComponent {
-  order: Order;
+  orderid: string;
   form: FormGroup;
   currentUser: any;
-  constructor(private orderService: OrderService, private formBuilder: FormBuilder, private angularFireAuth: AngularFireAuth,
+
+  constructor(private formBuilder: FormBuilder, private angularFireAuth: AngularFireAuth,
     private route: ActivatedRoute) {
     }
 
@@ -29,8 +29,9 @@ export class IAddMealComponent {
       this.currentUser = auth;
     });
     if (this.route) {
-      this.route.params.switchMap((params: Params) => this.orderService.getOrderByKey(params['orderid']))
-        .subscribe((order: Order) => this.order = order);
+      this.route.params.subscribe((params: Params) => {
+        this.orderid = params['orderid'];
+      });
     }
   }
 
@@ -45,7 +46,7 @@ export class IAddMealComponent {
       info: formModel.info as string,
       createdFrom: new OrderUser(this.currentUser),
       price: formModel.price as number,
-      orderKey: this.order.$key
+      orderKey: this.orderid
     };
     return saveMeal;
   }

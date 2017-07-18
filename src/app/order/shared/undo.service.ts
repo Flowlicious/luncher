@@ -7,7 +7,6 @@ import { Observable } from 'rxjs/Observable';
 import { UndoAction } from 'app/order/models/undoAction';
 
 export const selectUndoActionFromStore = (appState: IAppState) => {
-  debugger;
   return appState.undoAction;
 }
 
@@ -25,7 +24,6 @@ export class UndoService {
 
   init() {
     this.ngRedux.select('undoAction').subscribe((undoAction) => {
-      debugger;
       this.openUndoSnack();
     })
   }

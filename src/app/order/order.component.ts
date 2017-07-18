@@ -10,14 +10,17 @@ import { FirebaseApp } from 'angularfire2';
 import { AddOrderDialogComponent } from 'app/order/add-order/add-order.dialog.component';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { OrderService } from './shared/order.service';
 import { Observable } from 'rxjs/Observable';
 import { IAppState } from 'app/state/state.type';
 import { select } from '@angular-redux/store/lib/src';
+import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 
 const selectOrdersFromStore = (appState: IAppState) => {
   return appState.orders;
-}
+};
+const selectedOrderFromStore = (appState: IAppState) => {
+  return appState.selectedOrder;
+};
 
 @Component(
   {
@@ -41,14 +44,24 @@ const selectOrdersFromStore = (appState: IAppState) => {
   })
 export class OrderComponent implements OnInit {
   public orders: Order[];
-  public selectedOrder: Order;
+  @select(selectedOrderFromStore)
+  public selectedOrder: Observable<Order>;
   public orderOpen: String = 'close';
   @select(selectOrdersFromStore)
   public ordersFromStore: Observable<Order[]>;
-  constructor(private dialog: MdDialog, private orderService: OrderService, public afAuth: AngularFireAuth, private router: Router,
+  constructor(private dialog: MdDialog, public afAuth: AngularFireAuth, private router: Router,
+    private selectedOrderActionCreator: SelectedOrderActionCreator
   ) {
     this.ordersFromStore.subscribe((orders: Order[]) => {
+      debugger;
       this.orders = orders;
+    })
+    this.selectedOrder.subscribe((order) => {
+      if (order) {
+        this.orderOpen = 'open';
+      } else {
+        this.orderOpen = 'close';
+      }
     })
   }
 
@@ -66,8 +79,12 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  updateSelectedOrder(event: any) {
-    this.orderOpen = 'open';
-    this.selectedOrder = event.selectedOrder;
+  close() {
+    this.selectedOrderActionCreator.clearSelection();
   }
+
+  /*   updateSelectedOrder(event: any) {
+      this.orderOpen = 'open';
+      this.selectedOrder = event.selectedOrder;
+    } */
 }

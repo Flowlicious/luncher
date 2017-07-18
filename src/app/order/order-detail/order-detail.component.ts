@@ -1,8 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { OrderService } from './../shared/order.service';
 import { Component, OnInit, Inject, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Order } from './../models/order';
-import { IOrderDetailComponent } from 'app/order/order-detail/Iorder-detail.component';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { UndoAction } from 'app/order/models/undoAction';
@@ -28,9 +26,8 @@ export const selectUndoActionFromStore = (appState: IAppState) => {
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.css']
 })
-export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
+export class OrderDetailComponent implements OnInit, OnDestroy {
   public order: Order;
-  @Input() orderid: string;
   currentUser: any;
   @select(selectedOrderFromStore)
   public selectedOrder: Observable<Order>;
@@ -38,22 +35,28 @@ export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
   @select(selectUndoActionFromStore)
   private undoActionFromStore: Observable<UndoAction>;
 
-  constructor(public orderService: OrderService, private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
+  constructor(private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
     private selectedOrderActionCreator: SelectedOrderActionCreator,
     private mealActionCreator: MealActionCreator, private firebaseService: FirebaseService,
     private undoService: UndoService) {
   }
-  ngOnChanges() {
-    this.selectedOrderActionCreator.selectOrder(this.orderid);
-  }
+  /*   ngOnChanges() {
+      this.selectedOrderActionCreator.selectOrder(this.orderid);
+    } */
 
   ngOnDestroy() {
     this.firebaseService.deactivateMealSync(this.mealSubscription);
+    this.selectedOrderActionCreator.clearSelection();
   }
 
   ngOnInit() {
     this.selectedOrder.subscribe((selected) => {
-      this.order = selected;
+      if (selected) {
+        this.order = selected;
+        if (!this.mealSubscription) {
+          this.mealSubscription = this.firebaseService.acitvateMealSync(this.order.$key);
+        }
+      }
     })
     this.undoActionFromStore.subscribe((undoAction) => {
       if (undoAction) {
@@ -63,16 +66,15 @@ export class OrderDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.afAuth.authState.subscribe((auth) => {
       this.currentUser = auth;
     });
-    if (!this.orderid) {
+    if (!this.order) {
       this.route.params.subscribe((params: Params) => {
         if (params['orderid']) {
           this.selectedOrderActionCreator.selectOrder(params['orderid']);
+          this.mealSubscription = this.firebaseService.acitvateMealSync(params['orderid']);
         }
       });
-    } else {
-      this.selectedOrderActionCreator.selectOrder(this.orderid);
     }
-    this.mealSubscription = this.firebaseService.acitvateMealSync(this.orderid);
+
   }
   /**
    * Completes an order with an optional estimated delivery time

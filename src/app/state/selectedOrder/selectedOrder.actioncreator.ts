@@ -4,7 +4,7 @@ import { IAppState } from '../state.type';
 import { Order } from 'app/order/models/order';
 import { ORDER_ADD_ATTEMPT, ORDER_ADD } from 'app/state/order/order.action';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
-import { SELECT_ORDER, SELECTEDORDER_ORDER_COMPLETE_ATTEMPT } from 'app/state/selectedOrder/selectedOrder.action';
+import { SELECT_ORDER, SELECTEDORDER_ORDER_COMPLETE_ATTEMPT, SELECT_ORDER_CLEAR } from 'app/state/selectedOrder/selectedOrder.action';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { Meal } from 'app/order/models/meal';
 
@@ -43,6 +43,13 @@ export class SelectedOrderActionCreator {
     });
   }
 
+  public clearSelection() {
+    this.ngRedux.dispatch({
+      type: SELECT_ORDER_CLEAR,
+      payload: null
+    });
+  }
+
   /**
    * completes the selected order
    * @param order the order to be completed
@@ -52,6 +59,7 @@ export class SelectedOrderActionCreator {
       type: SELECTEDORDER_ORDER_COMPLETE_ATTEMPT,
       payload: order
     });
+    debugger;
     const orderToUpdate = this.afDb.object(`/orders/${order.$key}`)
     if (order.delivery) {
       orderToUpdate.update({ completed: true, delivery: order.delivery });

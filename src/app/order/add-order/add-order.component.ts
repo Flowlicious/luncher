@@ -2,7 +2,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { OrderService } from './../shared/order.service';
 import { Order } from './../models/order';
 import { Component, OnInit } from '@angular/core';
 import { MdDialogRef } from '@angular/material';
@@ -19,9 +18,9 @@ export class AddOrderComponent extends IAddOrderComponent {
   order: Order;
   form: FormGroup;
   currentUser: any;
-  constructor(private os: OrderService, private orderActionCreator: OrderActionCreator,
-    private AngularFireAuth: AngularFireAuth, private fb: FormBuilder, private router: Router, private _route: ActivatedRoute) {
-      super(os, AngularFireAuth, fb, _route);
+  constructor(private orderActionCreator: OrderActionCreator,
+    private angularFireAuth: AngularFireAuth, private fb: FormBuilder, private router: Router, private _route: ActivatedRoute) {
+    super(angularFireAuth, fb, _route);
   }
 
   /**
@@ -30,7 +29,6 @@ export class AddOrderComponent extends IAddOrderComponent {
   onSave() {
     if (this.form.invalid) { return; }
     const order = this.prepareSaveOrder();
-    // this.os.add(order);
     this.orderActionCreator.addOrder(order);
     this.router.navigate(['/order']);
   }
