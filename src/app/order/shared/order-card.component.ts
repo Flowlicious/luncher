@@ -39,7 +39,6 @@ export class OrderCardComponent implements OnInit {
       }); */
        this.selectedOrderActionCreator.selectOrder(this.order.$key);
     } else {
-      debugger;
       this.router.navigate(['/order-detail', this.order.$key]);
     }
   }

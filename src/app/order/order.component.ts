@@ -53,7 +53,6 @@ export class OrderComponent implements OnInit {
     private selectedOrderActionCreator: SelectedOrderActionCreator
   ) {
     this.ordersFromStore.subscribe((orders: Order[]) => {
-      debugger;
       this.orders = orders;
     })
     this.selectedOrder.subscribe((order) => {

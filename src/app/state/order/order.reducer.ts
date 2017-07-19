@@ -5,7 +5,6 @@ import { ORDER_ADD, ORDER_UPDATE } from 'app/state/order/order.action';
 
 const orderActionHandlerList: IActionHandlerMap<IOrderState, IOrderAction> = {
   [ORDER_ADD]: (state: IOrderState, action: IOrderItemAction): IOrderState => {
-    debugger;
     return state == null ? Object.assign([], [action.payload]) : [...state, action.payload];
   },
   [ORDER_UPDATE]: (state: IOrderState, action: IOrderItemAction): IOrderState => {

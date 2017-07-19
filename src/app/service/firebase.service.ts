@@ -29,7 +29,7 @@ export class FirebaseService {
           type: ORDER_ADD,
           payload: newOrder
         });
-      }
+      };
     });
 
     this.orders.$ref.on('child_changed', (snapshot) => {

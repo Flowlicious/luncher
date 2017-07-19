@@ -59,7 +59,6 @@ export class SelectedOrderActionCreator {
       type: SELECTEDORDER_ORDER_COMPLETE_ATTEMPT,
       payload: order
     });
-    debugger;
     const orderToUpdate = this.afDb.object(`/orders/${order.$key}`)
     if (order.delivery) {
       orderToUpdate.update({ completed: true, delivery: order.delivery });
