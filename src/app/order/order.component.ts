@@ -15,10 +15,10 @@ import { IAppState } from 'app/state/state.type';
 import { select } from '@angular-redux/store/lib/src';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
 
-const selectOrdersFromStore = (appState: IAppState) => {
+export const selectOrdersFromStore = (appState: IAppState) => {
   return appState.orders;
 };
-const selectedOrderFromStore = (appState: IAppState) => {
+export const selectedOrderFromStore = (appState: IAppState) => {
   return appState.selectedOrder;
 };
 

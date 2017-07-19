@@ -27,8 +27,9 @@ export class StoreService {
       selectedOrder: null,
       undoAction: null
     };
+     let enhancers = null;
     if (!environment.production) {
-      const enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
+      enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
     }
     const rootReducer = combineReducers<IAppState>({
       orders: OrderReducer,
