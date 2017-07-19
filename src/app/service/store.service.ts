@@ -27,7 +27,7 @@ export class StoreService {
       selectedOrder: null,
       undoAction: null
     };
-     let enhancers = null;
+     let enhancers =  [];
     if (!environment.production) {
       enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
     }
