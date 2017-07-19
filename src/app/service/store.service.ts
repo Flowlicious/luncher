@@ -7,7 +7,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { Order } from 'app/order/models/order';
 import { SelectedOrderReducer } from 'app/state/selectedOrder/selectOrder.reducer';
 import { UndoReducer } from 'app/state/undo/undo.reducer';
-
+import { environment } from '../../environments/environment';
 @Injectable()
 export class StoreService {
   public orders: FirebaseListObservable<Order[]>;
@@ -27,7 +27,9 @@ export class StoreService {
       selectedOrder: null,
       undoAction: null
     };
-    const enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
+    if (!environment.production) {
+      const enhancers = this.devTools.isEnabled() ? [this.devTools.enhancer()] : [];
+    }
     const rootReducer = combineReducers<IAppState>({
       orders: OrderReducer,
       selectedOrder: SelectedOrderReducer,
