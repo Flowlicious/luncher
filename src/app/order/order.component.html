@@ -6,16 +6,16 @@
 </md-card>
 
 <ng-template #displayOrders>
-  <md-progress-bar *ngIf="!(orders | async)" color="primary" mode="indeterminate">
+  <md-progress-bar *ngIf="!orders" color="primary" mode="indeterminate">
   </md-progress-bar>
   <div fxLayout="row">
     <div fxLayout="row" fxFlex fxLayout.sm="column" fxLayout.xs="column" style="flex-wrap: wrap">
-      <app-order-card *ngFor="let order of orders | async" [order]="order" (updateSelectedOrder)="updateSelectedOrder($event)">
+      <app-order-card *ngFor="let order of orders" [order]="order" >
       </app-order-card>
     </div>
     <div fxFlex="40" [@slideInOut]="orderOpen"  id="detailColumn">
-      <button *ngIf="selectedOrder" class="closeButton" md-mini-fab color="primary" (click)="selectedOrder = null; orderOpen = 'close'"><md-icon>arrow_forward</md-icon></button>
-      <app-order-detail  *ngIf="selectedOrder"  [orderid]="selectedOrder.$key"></app-order-detail>
+      <button *ngIf="selectedOrder | async" class="closeButton" md-mini-fab color="primary" (click)="close()"><md-icon>arrow_forward</md-icon></button>
+      <app-order-detail  *ngIf="selectedOrder | async"></app-order-detail>
     </div>
   </div>
 </ng-template>

@@ -10,8 +10,17 @@ import { FirebaseApp } from 'angularfire2';
 import { AddOrderDialogComponent } from 'app/order/add-order/add-order.dialog.component';
 import { FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { OrderService } from './shared/order.service';
 import { Observable } from 'rxjs/Observable';
+import { IAppState } from 'app/state/state.type';
+import { select } from '@angular-redux/store/lib/src';
+import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
+
+export const selectOrdersFromStore = (appState: IAppState) => {
+  return appState.orders;
+};
+export const selectedOrderFromStore = (appState: IAppState) => {
+  return appState.selectedOrder;
+};
 
 @Component(
   {
@@ -34,19 +43,28 @@ import { Observable } from 'rxjs/Observable';
     ]
   })
 export class OrderComponent implements OnInit {
-  public orders: FirebaseListObservable<Order[]>;
-  public selectedOrder: Order;
+  public orders: Order[];
+  @select(selectedOrderFromStore)
+  public selectedOrder: Observable<Order>;
   public orderOpen: String = 'close';
-
-  constructor(private dialog: MdDialog, private orderService: OrderService, public afAuth: AngularFireAuth, private router: Router,
-  ) { }
+  @select(selectOrdersFromStore)
+  public ordersFromStore: Observable<Order[]>;
+  constructor(private dialog: MdDialog, public afAuth: AngularFireAuth, private router: Router,
+    private selectedOrderActionCreator: SelectedOrderActionCreator
+  ) {
+    this.ordersFromStore.subscribe((orders: Order[]) => {
+      this.orders = orders;
+    })
+    this.selectedOrder.subscribe((order) => {
+      if (order) {
+        this.orderOpen = 'open';
+      } else {
+        this.orderOpen = 'close';
+      }
+    })
+  }
 
   ngOnInit() {
-    this.afAuth.authState.subscribe((auth) => {
-      if (auth) {
-        this.orders = this.orderService.getAllToday();
-      }
-    });
   }
 
   /**
@@ -60,8 +78,12 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  updateSelectedOrder(event: any) {
-    this.orderOpen = 'open';
-    this.selectedOrder = event.selectedOrder;
+  close() {
+    this.selectedOrderActionCreator.clearSelection();
   }
+
+  /*   updateSelectedOrder(event: any) {
+      this.orderOpen = 'open';
+      this.selectedOrder = event.selectedOrder;
+    } */
 }

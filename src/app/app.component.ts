@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { select } from '@angular-redux/store';
+
+export const getIsReadyFlagFromStore = (state) => true;
 
 @Component({
   selector: 'app-root',
@@ -9,6 +12,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class AppComponent implements OnInit {
   title = 'Luncher';
   displayBack = false;
+
+  @select(getIsReadyFlagFromStore)
+  public appReady: boolean;
   constructor(public afAuth: AngularFireAuth) {
   }
 

@@ -1,0 +1,3 @@
+export const UNDO_NEW = 'UNDO_NEW';
+export const UNDO_ATTEMPT_UNDO = 'UNDO_ATTEMPT_UNDO';
+export const UNDO_COMPLETE_UNDO = 'UNDO_COMPLETE_UNDO';
