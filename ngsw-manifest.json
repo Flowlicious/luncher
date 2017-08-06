@@ -1,4 +1,17 @@
 {
+  "external": {
+    "urls": [
+      {
+        "url": "https://fonts.googleapis.com/icon?family=Material+Icons"
+      }
+    ]
+  },
+  "static.ignore": [
+    "\\.js\\.map$"
+  ],
+  "static.versioned": [
+    "\\.[0-9a-z]{20}\\."
+  ],
   "routing": {
     "index": "/index.html",
     "routes": {
