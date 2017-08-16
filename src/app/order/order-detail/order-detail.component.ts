@@ -12,6 +12,8 @@ import { FirebaseService } from 'app/service/firebase.service';
 import { Subscription } from 'rxjs/Subscription';
 import { MealActionCreator } from 'app/state/meal/meal.actioncreator';
 import { UndoService } from 'app/order/shared/undo.service';
+import { PushService } from 'app/shared/push.service';
+import { Message } from 'app/order/models/message';
 
 export const selectedOrderFromStore = (appState: IAppState) => {
   return appState.selectedOrder;
@@ -38,7 +40,7 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   constructor(private afAuth: AngularFireAuth, private route: ActivatedRoute, private router: Router,
     private selectedOrderActionCreator: SelectedOrderActionCreator,
     private mealActionCreator: MealActionCreator, private firebaseService: FirebaseService,
-    private undoService: UndoService) {
+    private undoService: UndoService, private pushService: PushService) {
   }
   /*   ngOnChanges() {
       this.selectedOrderActionCreator.selectOrder(this.orderid);
@@ -86,6 +88,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
     }
     this.order.delivery = deliveryTime;
     this.selectedOrderActionCreator.completeOrder(this.order);
+    const usersForPush = this.order.meals.map((meal) => {
+      return meal.createdFrom.uid
+    });
+    console.log('users for push: ' + usersForPush);
+    this.pushService.sendPushToUsers(new Message('Bestellung wurde abgeschickt!', `${this.order.createdFrom.displayName} hat gerade die bestellung abgeschickt`), usersForPush).subscribe(data => {
+      console.log('verschickt');
+    })
     this.router.navigate(['/order']);
   }
 

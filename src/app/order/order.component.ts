@@ -14,6 +14,9 @@ import { Observable } from 'rxjs/Observable';
 import { IAppState } from 'app/state/state.type';
 import { select } from '@angular-redux/store/lib/src';
 import { SelectedOrderActionCreator } from 'app/state/selectedOrder/selectedOrder.actioncreator';
+import { environment } from '../../environments/environment';
+import { NgServiceWorker, NgPushRegistration } from '@angular/service-worker';
+import { PushService } from 'app/shared/push.service';
 
 export const selectOrdersFromStore = (appState: IAppState) => {
   return appState.orders;
@@ -49,8 +52,9 @@ export class OrderComponent implements OnInit {
   public orderOpen: String = 'close';
   @select(selectOrdersFromStore)
   public ordersFromStore: Observable<Order[]>;
+  public currentUser: any;
   constructor(private dialog: MdDialog, public afAuth: AngularFireAuth, private router: Router,
-    private selectedOrderActionCreator: SelectedOrderActionCreator
+    private selectedOrderActionCreator: SelectedOrderActionCreator, private sw: NgServiceWorker, private push: PushService
   ) {
     this.ordersFromStore.subscribe((orders: Order[]) => {
       this.orders = orders;
@@ -62,10 +66,27 @@ export class OrderComponent implements OnInit {
         this.orderOpen = 'close';
       }
     })
+    this.afAuth.authState.subscribe((auth) => {
+      if (auth) {
+        this.sw.registerForPush({ applicationServerKey: environment.pubkey })
+          .subscribe((r: NgPushRegistration) => {
+            console.log('successfully registered', r);
+            this.push.subscribeToPush(r, auth)
+          },
+          err => {
+            console.error('error registering for push', err);
+          });
+      }
+    });
   }
 
   ngOnInit() {
+
   }
+  unsubscribeFromPush() {
+    this.push.unsubscribeFromPush();
+  }
+
 
   /**
    * Opens a dialog to add an order

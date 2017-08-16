@@ -6,6 +6,7 @@
 </md-card>
 
 <ng-template #displayOrders>
+  <button type="button" (click)="unsubscribeFromPush()">test</button>
   <md-progress-bar *ngIf="!orders" color="primary" mode="indeterminate">
   </md-progress-bar>
   <div fxLayout="row">
