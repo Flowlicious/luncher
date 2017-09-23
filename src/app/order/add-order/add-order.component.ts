@@ -33,8 +33,8 @@ export class AddOrderComponent extends IAddOrderComponent {
     if (this.form.invalid) { return; }
     const order = this.prepareSaveOrder();
     this.orderActionCreator.addOrder(order);
-    this.sendMessage(new Message('eine neue Bestellung!',
-      `${order.createdFrom.displayName} möchte gerne bei ${order.where} bestellen`))
+    /*    this.sendMessage(new Message('eine neue Bestellung!',
+         `${order.createdFrom.displayName} möchte gerne bei ${order.where} bestellen`)) */
     this.router.navigate(['/order']);
   }
   sendMessage(msg) {

@@ -32,10 +32,10 @@ export class AddOrderDialogComponent extends IAddOrderComponent {
     if (this.form.invalid) { return; }
     const order = this.prepareSaveOrder();
     this.orderActionCreator.addOrder(order);
-    this.sendMessage({
-      title: 'eine neue Bestellung!', message: `${order.createdFrom.displayName} möchte gerne bei
-    ${order.where} bestellen`
-    });
+    /*     this.sendMessage({
+          title: 'eine neue Bestellung!', message: `${order.createdFrom.displayName} möchte gerne bei
+        ${order.where} bestellen`
+        }); */
     this.sendMessage(new Message('eine neue Bestellung!',
       `${order.createdFrom.displayName} möchte gerne bei ${order.where} bestellen`))
     this.dialogRef.close();

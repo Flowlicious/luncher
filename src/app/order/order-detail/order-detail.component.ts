@@ -92,9 +92,9 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
       return meal.createdFrom.uid
     });
     console.log('users for push: ' + usersForPush);
-    this.pushService.sendPushToUsers(new Message('Bestellung wurde abgeschickt!', `${this.order.createdFrom.displayName} hat gerade die bestellung abgeschickt`), usersForPush).subscribe(data => {
-      console.log('verschickt');
-    })
+    /*    this.pushService.sendPushToUsers(new Message('Bestellung wurde abgeschickt!', `${this.order.createdFrom.displayName} hat gerade die bestellung abgeschickt`), usersForPush).subscribe(data => {
+         console.log('verschickt');
+       }) */
     this.router.navigate(['/order']);
   }
 
