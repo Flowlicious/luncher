@@ -140,7 +140,7 @@ exports.message = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     console.log("Web message: ", req.body.msg.message);
     console.log("Web users: ", req.body.users);
-    console.log("Number of active subscriptions: " + pushSubscriptions.length);
+    console.log("active subscriptions: ", pushSubscriptions);
     var receivers = req.body.users;
     var msg = req.body.msg;
     var icon =
@@ -166,21 +166,23 @@ exports.message = functions.https.onRequest((req, res) => {
       //data: data
     };
 
-    console.log("ABONNIERTE USER: " + receivers);
+    console.log("ABONNIERTE USER: ", receivers);
     if (receivers === "ALL") {
+      console.log("PUSH AN ALLE ");
       // recivers = activeUsers;
+      console.log("subs:", pushSubscriptions);
       pushSubscriptions.forEach(function(item) {
+        console.log("Push funktion aufrufen");
         sendNotification(item, JSON.stringify(notificationData));
       });
     } else {
-      console.log("PUSH FÜR USERS VOR FILTER: " + pushSubscriptions);
-      console.log("ABONNIERTE USER: " + receivers);
+      console.log("PUSH FÜR USERS VOR FILTER: ", pushSubscriptions);
       pushSubscriptions = pushSubscriptions.map(sub => {
         if (receivers.includes(sub.user.uid)) {
           return sub;
         }
       });
-      console.log("PUSH FÜR USERS: " , pushSubscriptions);
+      console.log("PUSH FÜR USERS: ", pushSubscriptions);
       pushSubscriptions.forEach(function(item) {
         sendNotification(item, JSON.stringify(notificationData));
       });
