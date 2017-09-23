@@ -12,5 +12,6 @@ export const environment = {
     projectId: 'luncher-test',
     storageBucket: 'luncher-test.appspot.com',
     messagingSenderId: '357488186272'
-  }
+  },
+  pubkey: 'BA_wOJLtF3JqkGjsWc3M9-AQ2ZXOgQjB9JtlvZSdVBPp1EArT6t-Qo76cHSvSEOl3-EXATGL941KufDvwhJo2wQ'
 };
